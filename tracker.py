@@ -208,9 +208,14 @@ def main():
     # start with location
     data = agent.interrogate(M001)
     state = agent.process(TYPE_LOCATION,data)
+    loc_prober = [M004,M005,M006]
 
+    # find valid location
     if state == ERR_LOCATION_NOT_INDICATED:
         data = agent.interrogate(M002)
+        state = agent.process(TYPE_LOCATION,data)
+        if state == ERR_LOCATION_NOT_INDICATED:
+            data
 
 
 if __name__ == "__main__":

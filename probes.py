@@ -19,8 +19,11 @@ M005 = "The compromised places at Location 2 and Location 3 are the homes of Cou
 M006 = "The only compromised place at Location 4 was the restaurant where CB, EB, and their six friends\n"\
        "ate. Have you been to this restaurant on January 9, 2019?"
 
-M007 = "I'm sorry, but without the information about your location on 9th of January 2019,\n"\
+M007 = "The only compromised place at Location 6 was the campground.\n"\
+       "Were you part of the camp bonfire on January 9, 2019 at Location 6?"
+
+M008 = "I'm sorry, but without the information about your location on 9th of January 2019,\n"\
        " I am unable to determine if you've contracted Covid-19 disease on this day.\n"
 
-M008 = "You do not seem to have contracted the Covid-19 disease on January 9, 2019."
+M009 = "You do not seem to have contracted the Covid-19 disease on January 9, 2019."
 
