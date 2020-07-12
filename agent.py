@@ -43,6 +43,9 @@ class Agent():
     def learn(self):
         return None
 
+    def reply(self,probe_id):
+        print(probe_id)
+
     def greet(self):
         referral = input(self.greeting)
         # playsound('tester1.wav')
@@ -56,22 +59,30 @@ class Agent():
 
         def validate_location(information):
             valid = False
+            information = information.split()
 
             for i in information:
                 try:
-                    place = int(i)
-                    return True
+                    test = int(i)
+                    if(isinstance(test,int)):
+                        valid = True
+                    break
                 except:
                     continue
 
             return valid
 
+        if type == TYPE_LOCATION:
+            print(validate_location(information))
+
     def process(self,type=0,information=[]):
         answer = ""
 
         if type == TYPE_LOCATION:
-            if not self.validate(TYPE_LOCATION, information):
+            if (self.validate(TYPE_LOCATION, information) == False):
                 return ERR_LOCATION_NOT_INDICATED
+            else:
+                return 0
 
 
 class Individual:

@@ -189,14 +189,15 @@ MODEL_22 = Model(
 
 def main():
 
-    greeting = "Hi! I will be your agent for today. I'm here to help you find out\n" \
+    greeting = "Hi, I'm Karen Bot! I will be your knowledge-based agent for today.\n" \
+               " I am powered by an artificial intelligence that will help you find out\n" \
                " if you have contracted the Covid-19 disease on January 9, 2019\n" \
                " based on the information that I have. I will also be able to\n" \
                " tell you about the source of infection and how you contracted Covid-19,\n" \
-               " if you've been infected. I'm continuously learning,\n" \
-               " so I might be able to give you better results as you tell me more\n" \
-               " about the situation. Let's get started. What name would you prefer\n" \
-               " to be called?\n"
+               " if you've been infected. My creator is a Software Developer named Karen Urate.\n"\
+               " I'm continuously learning, so I might be able to give you better results as you tell me more\n" \
+               " about how your day went on 9th of January 2019. Let's get started.\n" \
+               " What name would you prefer to be called?\n"
 
     locations = []
     data = None
@@ -208,15 +209,26 @@ def main():
     # start with location
     data = agent.interrogate(M001)
     state = agent.process(TYPE_LOCATION,data)
-    loc_prober = [M004,M005,M006]
+    loc_prober = [M004,M005,M006,M007]
+    print("STATE: " + str(state))
 
     # find valid location
     if state == ERR_LOCATION_NOT_INDICATED:
         data = agent.interrogate(M002)
         state = agent.process(TYPE_LOCATION,data)
-        if state == ERR_LOCATION_NOT_INDICATED:
-            data
+        i = 0
 
+        if state == ERR_LOCATION_NOT_INDICATED:
+            agent.reply(M003)
+
+        while((state == ERR_LOCATION_NOT_INDICATED) and (i<4)):
+            data = agent.interrogate(loc_prober[i])
+            state = agent.process(TYPE_LOCATION,data)
+            i = i + 1
+
+        if state == ERR_LOCATION_NOT_INDICATED:
+            print(M008)
+            exit
 
 if __name__ == "__main__":
     main()
