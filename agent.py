@@ -18,7 +18,7 @@ class Agent():
     def interrogate(self):
         referral = input(self.greeting)
         individual = Individual(referral)
-        individual.locations = input(str(individual.name) + ", please tell me about all of the places that you've been to\n"
+        points = input(str(individual.name) + ", please tell me about all of the places that you've been to\n"
                                      "  on 9th of January 2019, starting with the most recent.\n"
                                      " For example, if you went to the gym at Location 1 and ate at a restaurant\n"
                                      " at Location 4, you can simply type, 'gym 1 restaurant 4'.\n")
@@ -32,6 +32,11 @@ class Individual:
         self.locations = []
         self.contacts = []
 
+class Location:
+    def __init__(self,id,quarantines):
+        self.id = id
+        self.quarantines = quarantines
+
 class Model:
     def __init__(self):
         self.id = 0
@@ -41,7 +46,10 @@ class Model:
         return None
 
 class Knowledge:
-  def __init__(self,category):
-    self.id = 0
-    self.category = category
-    self.base = []
+    def __init__(self,category):
+        self.id = 0
+        self.category = category
+        self.base = []
+
+    def process(self, information):
+        return None

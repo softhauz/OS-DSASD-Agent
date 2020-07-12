@@ -19,7 +19,14 @@ and find the source of infection based on built-up knowledge base.
 CATEGORY_LOCATION = 0
 CATEGORY_CONTACT = 1
 
-
+QUARANTINES = [
+    Location(1,["office","gym","grocery store"]),
+    Location(2,["home","park","beach","mall"]),
+    Location(3,["home","park","beach","mall"]),
+    Location(4,["restaurant"]),
+    Location(5,["home","park","beach","mall"]),
+    Location(6,["campground"])
+]
 
 def main():
 
@@ -33,7 +40,6 @@ def main():
                " to be called?"
 
     agent = Agent(greeting,"Karen")
-
     agent.interrogate()
 
 if __name__ == "__main__":
