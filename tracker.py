@@ -236,7 +236,7 @@ def main():
             agent.reply(M010)
         else:
             # find a matching location
-            agent.reply()
+            agent.reply(M011)
 
 
 if __name__ == "__main__":
