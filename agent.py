@@ -52,9 +52,11 @@ class Model:
         return True
 
 class Knowledge:
-    def __init__(self,base):
+    def __init__(self,location,contact,visit):
         self.id = 0
-        self.base = base
+        self.location = location
+        self.contact = contact
+        self.visit = visit
 
     def process(self, information):
         return None

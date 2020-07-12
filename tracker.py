@@ -20,29 +20,170 @@ CATEGORY_LOCATION = 0
 CATEGORY_CONTACT = 1
 
 QUARANTINES = [
-    Location(1,["office","gym","grocery store"]),
-    Location(2,["home","park","beach","mall"]),
-    Location(3,["home","park","beach","mall"]),
+    Location(1,["office","gym","grocery store","house"]),
+    Location(2,["home"]),
+    Location(3,["home"]),
     Location(4,["restaurant"]),
-    Location(5,["home","park","beach","mall"]),
+    Location(5,["park","beach","mall"]),
     Location(6,["campground"])
 ]
 
-CONTACTS = ["AA","BA","CA","DA","EA","FA","GA","HA","IA","JG","AB","BB","CB","EB","Couple 1","Couple 2","Relatives","Friends","Locals","Socials"]
+CONTACTS = ["AA","BA","CA","DA","EA","FA","GA","HA","IA","JG","AB","BB","CB","EB","Couple 1","Couple 2","Couple 3","Relatives","Six Friends","Locals","Socials"]
 
 MODEL_1 = Model(
     Knowledge(
-    [
         QUARANTINES[0],
-        ["AA","BA","CA"]
-    ]))
+        ["AA","BA","CA"],
+        "office"
+    ))
 
-MODEL_2= Model(
+MODEL_2 = Model(
     Knowledge(
-    [
         QUARANTINES[0],
-        ["EA"]
-    ]))
+        ["AA"],
+        "office"
+    ))
+
+MODEL_3 = Model(
+    Knowledge(
+        QUARANTINES[0],
+        ["BA"],
+        "office"
+    ))
+
+MODEL_4 = Model(
+    Knowledge(
+        QUARANTINES[0],
+        ["CA"],
+        "office"
+    ))
+
+MODEL_5 = Model(
+    Knowledge(
+        QUARANTINES[0],
+        ["EA"],
+        "grocery store"
+    ))
+
+MODEL_6 = Model(
+    Knowledge(
+        QUARANTINES[0],
+        ["BA"],
+        "house"
+    ))
+
+MODEL_7 = Model(
+    Knowledge(
+        QUARANTINES[0],
+        ["CA"],
+        "house"
+    ))
+
+MODEL_8 = Model(
+    Knowledge(
+        QUARANTINES[0],
+        ["BA","CA"],
+        "house"
+    ))
+
+MODEL_9 = Model(
+    Knowledge(
+        QUARANTINES[0],
+        ["DA"],
+        "gym"
+    ))
+
+MODEL_10 = Model(
+    Knowledge(
+        QUARANTINES[5],
+        ["six friends"],
+        "campground"
+    ))
+
+MODEL_11 = Model(
+    Knowledge(
+        QUARANTINES[5],
+        ["CB"],
+        "campground"
+    ))
+
+MODEL_12 = Model(
+    Knowledge(
+        QUARANTINES[5],
+        ["EB"],
+        "campground"
+    ))
+
+
+MODEL_13 = Model(
+    Knowledge(
+        QUARANTINES[5],
+        ["CB","EB"],
+        "campground"
+    ))
+
+MODEL_14 = Model(
+    Knowledge(
+        QUARANTINES[1],
+        ["AB"],
+        "home"
+    ))
+
+MODEL_15 = Model(
+    Knowledge(
+        QUARANTINES[1],
+        ["BB"],
+        "home"
+    ))
+
+MODEL_16 = Model(
+    Knowledge(
+        QUARANTINES[1],
+        ["AB","BB"],
+        "home"
+    ))
+
+MODEL_17 = Model(
+    Knowledge(
+        QUARANTINES[2],
+        ["AB"],
+        "home"
+    ))
+
+MODEL_18 = Model(
+    Knowledge(
+        QUARANTINES[2],
+        ["BB"],
+        "home"
+    ))
+
+MODEL_19 = Model(
+    Knowledge(
+        QUARANTINES[2],
+        ["AB","BB"],
+        "home"
+    ))
+
+MODEL_20 = Model(
+    Knowledge(
+        QUARANTINES[3],
+        ["CB"],
+        "restaurant"
+    ))
+
+MODEL_21 = Model(
+    Knowledge(
+        QUARANTINES[3],
+        ["EB"],
+        "restaurant"
+    ))
+
+MODEL_22 = Model(
+    Knowledge(
+        QUARANTINES[3],
+        ["CB","EB"],
+        "restaurant"
+    ))
 
 def main():
 
