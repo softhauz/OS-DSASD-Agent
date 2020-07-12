@@ -20,8 +20,6 @@ disease from Location 1 to Location 6 in a span of 12-hour period on
 The agent must have an ability to learn, create new models,
 and find the source of infection based on built-up knowledge base.
 """
-CATEGORY_LOCATION = 0
-CATEGORY_CONTACT = 1
 
 QUARANTINES = [
     Location(1,["office","gym","grocery store","house"]),
@@ -200,8 +198,20 @@ def main():
                " about the situation. Let's get started. What name would you prefer\n" \
                " to be called?\n"
 
+    locations = []
+    data = None
+    state = 0
+
     agent = Agent(greeting,"Karen")
     agent.greet()
+
+    # start with location
+    data = agent.interrogate(M001)
+    state = agent.process(TYPE_LOCATION,data)
+
+    if state == ERR_LOCATION_NOT_INDICATED:
+        data = agent.interrogate(M002)
+
 
 if __name__ == "__main__":
     main()

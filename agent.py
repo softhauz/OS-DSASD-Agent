@@ -1,4 +1,5 @@
 from playsound import playsound
+from probes import *
 """
 Tracker
 
@@ -22,6 +23,7 @@ and find the source of infection based on built-up knowledge base.
 TYPE_LOCATION = 1
 TYPE_CONTACT = 2
 TYPE_VISIT = 3
+ERR_LOCATION_NOT_INDICATED = 4
 
 class Agent():
     def __init__(self, greeting, name):
@@ -50,10 +52,11 @@ class Agent():
     def interrogate(self,probe_id):
         return input(probe_id)
 
-    def process(self,type,information):
+    def validate(self,type,information):
 
         def validate_location(information):
             valid = False
+
             for i in information:
                 try:
                     place = int(i)
@@ -63,9 +66,12 @@ class Agent():
 
             return valid
 
+    def process(self,type=0,information=[]):
+        answer = ""
 
         if type == TYPE_LOCATION:
-
+            if not self.validate(TYPE_LOCATION, information):
+                return ERR_LOCATION_NOT_INDICATED
 
 
 class Individual:
@@ -78,10 +84,10 @@ class Location:
         self.id = id
         self.quarantines = quarantines
 
-    def match(self, location):
+    def match(self, location=None):
         for p in location.quarantines:
             if p in self.quarantines:
-                # print("1st Common Place Found: " + p) - DEBUGGER
+                # print("1st Common Place Found: " + p) #----------- DEBUGGER
                 return True
 
         return False
