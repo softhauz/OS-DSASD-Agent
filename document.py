@@ -3,7 +3,7 @@ Tracker
 
 Date: July 11, 2020
 Author: Karen Urate
-File: tracker.py
+File: document.py
 Description: This file demonstrates handling of user
 inputs and encapsulating data into Tracker objects.
 
