@@ -21,3 +21,6 @@ M006 = "The only compromised place at Location 4 was the restaurant where CB, EB
 
 M007 = "I'm sorry, but without the information about your location on 9th of January 2019,\n"\
        " I am unable to determine if you've contracted Covid-19 disease on this day.\n"
+
+M008 = "You do not seem to have contracted the Covid-19 disease on January 9, 2019."
+

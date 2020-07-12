@@ -85,10 +85,12 @@ class Location:
         self.quarantines = quarantines
 
     def match(self, location=None):
-        for p in location.quarantines:
-            if p in self.quarantines:
-                # print("1st Common Place Found: " + p) #----------- DEBUGGER
-                return True
+
+        if self.id == location.id:
+            for p in location.quarantines:
+                if p in self.quarantines:
+                    # print("1st Common Place Found: " + p) #----------- DEBUGGER
+                    return True
 
         return False
 
