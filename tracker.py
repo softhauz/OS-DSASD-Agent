@@ -28,6 +28,7 @@ QUARANTINES = [
     Location(6,["campground"])
 ]
 
+
 def main():
 
     greeting = "Hi! I will be your agent for today. I'm here to help you find out\n" \

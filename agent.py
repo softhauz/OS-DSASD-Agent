@@ -38,17 +38,22 @@ class Location:
         self.quarantines = quarantines
 
 class Model:
-    def __init__(self):
+    def __init__(self,knowledge):
         self.id = 0
-        self.knowledge = Knowledge()
+        self.knowledge = knowledge
 
     def match(self, model):
-        return None
+        base = model.knowledge.base
+
+        for i in base:
+            if i not in self.knowledge.base:
+                return False
+
+        return True
 
 class Knowledge:
-    def __init__(self,category):
+    def __init__(self):
         self.id = 0
-        self.category = category
         self.base = []
 
     def process(self, information):
