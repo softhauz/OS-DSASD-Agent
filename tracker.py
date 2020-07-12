@@ -5,8 +5,11 @@ Tracker
 
 Date: July 11, 2020
 Author: Karen Urate
+File: tracker.py
+Description: This file is the main runner for Tracker.  
+
 ------------------------------------------------------------------
-                            DESCRIPTION
+                           PROJECT DESCRIPTION
 ------------------------------------------------------------------
 Create a knowledge-based agent that will compute and trace
 the source of infection for an individual who has contracted Covid-19
