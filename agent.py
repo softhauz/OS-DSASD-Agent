@@ -1,6 +1,5 @@
 from playsound import playsound
 from probes import *
-from tracker import *
 
 """
 Tracker
@@ -25,8 +24,10 @@ and find the source of infection based on built-up knowledge base.
 TYPE_LOCATION = 1
 TYPE_CONTACT = 2
 TYPE_VISIT = 3
+TYPE_RESPONSE_LOCATION = 6
 ERR_LOCATION_NOT_INDICATED = 4
 ERR_NOT_COMPROMISED = 5
+
 
 class Agent():
     def __init__(self, greeting, name):
@@ -42,28 +43,47 @@ class Agent():
 
     def find(self,type=TYPE_LOCATION,input=""):
         prober = []
+        points = [
+            Location(1, ["office", "gym", "grocery store", "house"]),
+            Location(2, ["home"]),
+            Location(3, ["home"]),
+            Location(4, ["restaurant"]),
+            Location(5, ["park", "beach", "mall"]),
+            Location(6, ["campground"])
+        ]
 
         if type == TYPE_LOCATION:
             input = input.split()
             for i in input:
-                if any(place == i for place in QUARANTINES[0].quarantines) and (M004 not in prober):
+                if any(place == i for place in points[0].quarantines) and (M004 not in prober):
                     prober.append(M004)
-                elif any(place == i for place in QUARANTINES[1].quarantines) and (M005 not in prober):
+                if any(place == i for place in points[1].quarantines) and (M005 not in prober):
                     prober.append(M005)
-                elif any(place == i for place in QUARANTINES[2].quarantines) and (M006 not in prober):
+                if any(place == i for place in points[2].quarantines) and (M006 not in prober):
                     prober.append(M006)
-                elif any(place == i for place in QUARANTINES[3].quarantines) and (M007 not in prober):
+                if any(place == i for place in points[3].quarantines) and (M007 not in prober):
                     prober.append(M007)
-                elif any(place == i for place in QUARANTINES[5].quarantines) and (M008 not in prober):
+                if any(place == i for place in points[5].quarantines) and (M008 not in prober):
                     prober.append(M008)
+        elif type == TYPE_RESPONSE_LOCATION:
+            if input == M004:
+                return 1
+            elif input == M005:
+                return 2
+            elif input == M006:
+                return 3
+            elif input == M007:
+                return 4
+            elif input == M008:
+                return 6
 
         return prober
 
     def learn(self):
         return None
 
-    def reply(self,probe_id):
-        print(probe_id)
+    def reply(self,message):
+        print(message)
 
     def greet(self):
         referral = input(self.greeting)

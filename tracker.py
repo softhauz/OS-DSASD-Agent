@@ -193,7 +193,7 @@ def main():
                " I am powered by an artificial intelligence that will help you find out\n" \
                " if you have contracted the Covid-19 disease on January 9, 2020\n" \
                " based on the information that I have. I will also be able to\n" \
-               " tell you about the source of infection and how you contracted Covid-19,\n" \
+               " tell you about the source of infection and how you've contracted Covid-19,\n" \
                " if you've been infected. My creator is a Software Developer named Karen Urate.\n"\
                " The start of my development began on July 11, 2020. I was born on the next day.\n"\
                " I'm continuously learning, so I might be able to give you better results as you tell me more\n" \
@@ -210,9 +210,8 @@ def main():
     # start with location
     data = agent.interrogate(M001)
     state = agent.process(TYPE_LOCATION,data)
-    loc_prober = [M004,M005,M006,M007,M008]
-    loc_pair = [1,2,3,4,6]
-    loc_filter = agent.find(TYPE_LOCATION,data.deepcopy())
+    original = data
+    loc_filter = agent.find(TYPE_LOCATION,original)
 
     # find valid location
     if state == ERR_LOCATION_NOT_INDICATED:
@@ -222,11 +221,14 @@ def main():
 
         if state == ERR_LOCATION_NOT_INDICATED:
             agent.reply(M003)
+            agent.reply(M012)
+            agent.reply(original)
 
         while (state == ERR_LOCATION_NOT_INDICATED) and (i < len(loc_filter)):
-            answer = agent.interrogate(loc_prober[i])
+            answer = agent.interrogate(loc_filter[i])
+
             if answer.strip().lower() in AFFIRMATIONS:
-                data = str(loc_pair[i])
+                data = str(agent.find(TYPE_RESPONSE_LOCATION,loc_filter[i]))
 
             state = agent.process(TYPE_LOCATION,data)
             i = i + 1

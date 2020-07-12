@@ -1,4 +1,4 @@
-AFFIRMATIONS = ["yes", "sure", "indeed", "y", "of course", "definitely", "yeah", "agreed", "affirmative"]
+AFFIRMATIONS = ["yes", "sure", "indeed", "y", "of course", "definitely", "yeah", "agreed", "affirmative", "absolutely", "ok", "okay"]
 
 M001 = "Please tell me about all of the places that you've been to\n"\
        "on 9th of January 2020, starting with the very first place you've visited on this day.\n"\
@@ -35,3 +35,5 @@ M010 = "According to what you've told me, none of the places you've visited were
        "You do not seem to have contracted the Covid-19 disease on January 9, 2020."
 
 M011 = "Great! Thank you for that information. Let's move on."
+
+M012 = "Here are the places you've mentioned: "
