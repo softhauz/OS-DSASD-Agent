@@ -54,9 +54,16 @@ class Individual:
         self.contacts = []
 
 class Location:
-    def __init__(self,id,quarantines):
+    def __init__(self,id=0,quarantines=[]):
         self.id = id
         self.quarantines = quarantines
+
+    def match(self, places, location):
+        for p in places:
+            if p in location.quarantines:
+                return True
+
+        return False
 
 class Model:
     def __init__(self,knowledge):

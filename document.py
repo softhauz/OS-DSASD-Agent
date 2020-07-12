@@ -27,7 +27,7 @@ TYPE 1: Handling user inputs for locations.
 input_location = "restaurant gym park 1 park 5"
 places = input_location.split()
 visited = []
-visit = Location(0,[])
+visit = Location()
 
 for p in places:
     try:
