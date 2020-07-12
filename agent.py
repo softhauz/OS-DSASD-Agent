@@ -52,9 +52,9 @@ class Model:
         return True
 
 class Knowledge:
-    def __init__(self):
+    def __init__(self,base):
         self.id = 0
-        self.base = []
+        self.base = base
 
     def process(self, information):
         return None

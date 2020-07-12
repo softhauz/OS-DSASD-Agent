@@ -28,20 +28,40 @@ QUARANTINES = [
     Location(6,["campground"])
 ]
 
+CONTACTS = ["AA","BA","CA","DA","EA","FA","GA","HA","IA","JG","AB","BB","CB","EB","Couple 1","Couple 2","Relatives","Friends","Locals","Socials"]
+
+MODEL_1 = Model(
+    Knowledge(
+    [
+        QUARANTINES[0],
+        ["AA","BA","CA"]
+    ]))
+
+MODEL_2= Model(
+    Knowledge(
+    [
+        QUARANTINES[0],
+        ["EA"]
+    ]))
 
 def main():
 
-    greeting = "Hi! I will be your agent for today. I'm here to help you find out\n" \
-               " if you have contracted the Covid-19 disease on January 9, 2019\n" \
-               " based on the information that I have. I will also be able to\n" \
-               " tell you about the source of infection and how you contracted Covid-19,\n" \
-               " if you've been infected. I'm continuously learning,\n" \
-               " so I might be able to give you better results as you tell me more\n" \
-               " about the situation. Let's get started. What name would you prefer\n" \
-               " to be called?"
+    variety = ["abc", 1, 2]
+    print(4 in variety)
+    print("abc" in variety)
+    print(5 not in variety)
 
-    agent = Agent(greeting,"Karen")
-    agent.interrogate()
+    # greeting = "Hi! I will be your agent for today. I'm here to help you find out\n" \
+    #            " if you have contracted the Covid-19 disease on January 9, 2019\n" \
+    #            " based on the information that I have. I will also be able to\n" \
+    #            " tell you about the source of infection and how you contracted Covid-19,\n" \
+    #            " if you've been infected. I'm continuously learning,\n" \
+    #            " so I might be able to give you better results as you tell me more\n" \
+    #            " about the situation. Let's get started. What name would you prefer\n" \
+    #            " to be called?"
+    #
+    # agent = Agent(greeting,"Karen")
+    # agent.interrogate()
 
 if __name__ == "__main__":
     main()
