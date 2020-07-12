@@ -1,7 +1,7 @@
 AFFIRMATIONS = ["yes", "sure", "indeed", "y", "of course", "definitely", "yeah", "agreed", "affirmative"]
 
 M001 = "Please tell me about all of the places that you've been to\n"\
-       "on 9th of January 2019, starting with the very first place you've visited on this day.\n"\
+       "on 9th of January 2020, starting with the very first place you've visited on this day.\n"\
        "For example, if you went to the gym and grocery store at Location 1, then, ate at a restaurant\n"\
        "at Location 4, you can simply type, 'gym grocery 1 restaurant 4'.\n"
 
@@ -16,22 +16,22 @@ M004 = "The compromised places at Location 1 include a gym, an office, a house, 
 
 M005 = "The compromised places at Location 2 are the homes of Couple 1's relatives.\n"\
        "Have you been to any of the residences of Couple 1's relatives at Location 2\n"\
-       "on January 9, 2019?"
+       "on January 9, 2020?"
 
 M006 = "Just like Location 2, the compromised places at Location 3 are the homes of Couple 1's relatives.\n"\
        "Have you been to any of the residences of Couple 1's relatives at Location 3\n"\
-       "on January 9, 2019?"
+       "on January 9, 2020?"
 
 M007 = "The only compromised place at Location 4 was the restaurant where CB, EB, and their six friends\n"\
-       "ate. Have you been to this restaurant on January 9, 2019?"
+       "ate. Have you been to this restaurant on January 9, 2020?"
 
 M008 = "The only compromised place at Location 6 was the campground.\n"\
-       "Were you part of the camp bonfire on January 9, 2019 at Location 6?"
+       "Were you part of the camp bonfire on January 9, 2020 at Location 6?"
 
-M009 = "I'm sorry, but without the information about your location on 9th of January 2019,\n"\
+M009 = "I'm sorry, but without the information about your location on 9th of January 2020,\n"\
        "I am unable to determine if you've contracted Covid-19 disease on this day.\n"
 
 M010 = "According to what you've told me, none of the places you've visited were compromised.\n" \
-       "You do not seem to have contracted the Covid-19 disease on January 9, 2019."
+       "You do not seem to have contracted the Covid-19 disease on January 9, 2020."
 
 M011 = "Great! Thank you for that information. Let's move on."

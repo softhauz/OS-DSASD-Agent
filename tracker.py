@@ -191,10 +191,11 @@ def main():
 
     greeting = "Hi, I'm Karen Bot! I will be your knowledge-based agent for today.\n" \
                " I am powered by an artificial intelligence that will help you find out\n" \
-               " if you have contracted the Covid-19 disease on January 9, 2019\n" \
+               " if you have contracted the Covid-19 disease on January 9, 2020\n" \
                " based on the information that I have. I will also be able to\n" \
                " tell you about the source of infection and how you contracted Covid-19,\n" \
                " if you've been infected. My creator is a Software Developer named Karen Urate.\n"\
+               " The start of my development began on July 11, 2020. I was born on the next day.\n"\
                " I'm continuously learning, so I might be able to give you better results as you tell me more\n" \
                " about how your day went on 9th of January 2019. Let's get started.\n" \
                " What name would you prefer to be called?\n"
