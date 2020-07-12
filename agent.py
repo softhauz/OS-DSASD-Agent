@@ -46,15 +46,15 @@ class Agent():
         if type == TYPE_LOCATION:
             input = input.split()
             for i in input:
-                if any(place == i for place in QUARANTINES[0].quarantines):
+                if any(place == i for place in QUARANTINES[0].quarantines) and (M004 not in prober):
                     prober.append(M004)
-                elif any(place == i for place in QUARANTINES[1].quarantines):
+                elif any(place == i for place in QUARANTINES[1].quarantines) and (M005 not in prober):
                     prober.append(M005)
-                elif any(place == i for place in QUARANTINES[2].quarantines):
+                elif any(place == i for place in QUARANTINES[2].quarantines) and (M006 not in prober):
                     prober.append(M006)
-                elif any(place == i for place in QUARANTINES[3].quarantines):
+                elif any(place == i for place in QUARANTINES[3].quarantines) and (M007 not in prober):
                     prober.append(M007)
-                elif any(place == i for place in QUARANTINES[5].quarantines):
+                elif any(place == i for place in QUARANTINES[5].quarantines) and (M008 not in prober):
                     prober.append(M008)
 
         return prober

@@ -210,10 +210,9 @@ def main():
     # start with location
     data = agent.interrogate(M001)
     state = agent.process(TYPE_LOCATION,data)
-    original = data.deepcopy()
     loc_prober = [M004,M005,M006,M007,M008]
     loc_pair = [1,2,3,4,6]
-    loc_filter = []
+    loc_filter = agent.find(TYPE_LOCATION,data.deepcopy())
 
     # find valid location
     if state == ERR_LOCATION_NOT_INDICATED:
@@ -223,8 +222,6 @@ def main():
 
         if state == ERR_LOCATION_NOT_INDICATED:
             agent.reply(M003)
-
-
 
         while (state == ERR_LOCATION_NOT_INDICATED) and (i < len(loc_filter)):
             answer = agent.interrogate(loc_prober[i])
