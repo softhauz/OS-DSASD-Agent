@@ -1,4 +1,4 @@
-
+from playsound import playsound
 """
 Tracker
 
@@ -10,7 +10,7 @@ Description: This file contains the class objects for Tracker.
 ------------------------------------------------------------------
                            PROJECT DESCRIPTION
 ------------------------------------------------------------------
-Create a knowledge-based agent that will compute and trace
+Create a knowledge-based agent prototype that will compute and trace
 the source of infection for an individual who has contracted Covid-19
 disease from Location 1 to Location 6 in a span of 12-hour period on
 9th of January 2019, based on fictional raw data provided.
@@ -39,17 +39,14 @@ class Agent():
 
     def greet(self):
         referral = input(self.greeting)
-        self.individual = Individual(referral)
+        self.individual.name = referral
         print("Hello, " + self.individual.name + "!")
 
     def interrogate(self,probe_id):
-        points = input("Please tell me about all of the places that you've been to\n"
-                       "  on 9th of January 2019, starting with the very first place you've visited on this day.\n"
-                       " For example, if you went to the gym at Location 1 and ate at a restaurant\n"
-                       " at Location 4, you can simply type, 'gym 1 restaurant 4'.")
+        points = input(probe_id)
 
 class Individual:
-    def __init__(self,name):
+    def __init__(self,name=""):
         self.id = 0
         self.name = name
 
@@ -58,12 +55,15 @@ class Location:
         self.id = id
         self.quarantines = quarantines
 
-    def match(self, places, location):
-        for p in places:
-            if p in location.quarantines:
+    def match(self, location):
+        for p in location.quarantines:
+            if p in self.quarantines:
                 return True
 
         return False
+
+    def print(self):
+        print("Location " + str(self.id) + ": " + str(self.quarantines))
 
 class Model:
     def __init__(self,knowledge):

@@ -1,4 +1,5 @@
 from agent import *
+from probes import *
 
 """
 Tracker
@@ -11,7 +12,7 @@ Description: This file is the main runner for Tracker.
 ------------------------------------------------------------------
                            PROJECT DESCRIPTION
 ------------------------------------------------------------------
-Create a knowledge-based agent that will compute and trace
+Create a knowledge-based agent prototype that will compute and trace
 the source of infection for an individual who has contracted Covid-19
 disease from Location 1 to Location 6 in a span of 12-hour period on
 9th of January 2019, based on fictional raw data provided.
@@ -190,22 +191,17 @@ MODEL_22 = Model(
 
 def main():
 
-    variety = ["abc", 1, 2]
-    print(4 in variety)
-    print("abc" in variety)
-    print(5 not in variety)
+    greeting = "Hi! I will be your agent for today. I'm here to help you find out\n" \
+               " if you have contracted the Covid-19 disease on January 9, 2019\n" \
+               " based on the information that I have. I will also be able to\n" \
+               " tell you about the source of infection and how you contracted Covid-19,\n" \
+               " if you've been infected. I'm continuously learning,\n" \
+               " so I might be able to give you better results as you tell me more\n" \
+               " about the situation. Let's get started. What name would you prefer\n" \
+               " to be called?\n"
 
-    # greeting = "Hi! I will be your agent for today. I'm here to help you find out\n" \
-    #            " if you have contracted the Covid-19 disease on January 9, 2019\n" \
-    #            " based on the information that I have. I will also be able to\n" \
-    #            " tell you about the source of infection and how you contracted Covid-19,\n" \
-    #            " if you've been infected. I'm continuously learning,\n" \
-    #            " so I might be able to give you better results as you tell me more\n" \
-    #            " about the situation. Let's get started. What name would you prefer\n" \
-    #            " to be called?"
-    #
-    # agent = Agent(greeting,"Karen")
-    # agent.interrogate()
+    agent = Agent(greeting,"Karen")
+    agent.greet()
 
 if __name__ == "__main__":
     main()
