@@ -1,5 +1,7 @@
 from playsound import playsound
 from probes import *
+from tracker import *
+
 """
 Tracker
 
@@ -38,8 +40,24 @@ class Agent():
     def collect(self,information):
         self.library.append(information)
 
-    def find(self):
-        return None
+    def find(self,type=TYPE_LOCATION,input=""):
+        prober = []
+
+        if type == TYPE_LOCATION:
+            input = input.split()
+            for i in input:
+                if any(place == i for place in QUARANTINES[0].quarantines):
+                    prober.append(M004)
+                elif any(place == i for place in QUARANTINES[1].quarantines):
+                    prober.append(M005)
+                elif any(place == i for place in QUARANTINES[2].quarantines):
+                    prober.append(M006)
+                elif any(place == i for place in QUARANTINES[3].quarantines):
+                    prober.append(M007)
+                elif any(place == i for place in QUARANTINES[5].quarantines):
+                    prober.append(M008)
+
+        return prober
 
     def learn(self):
         return None

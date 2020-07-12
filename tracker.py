@@ -197,7 +197,7 @@ def main():
                " if you've been infected. My creator is a Software Developer named Karen Urate.\n"\
                " The start of my development began on July 11, 2020. I was born on the next day.\n"\
                " I'm continuously learning, so I might be able to give you better results as you tell me more\n" \
-               " about how your day went on 9th of January 2019. Let's get started.\n" \
+               " about how your day went on 9th of January 2020. Let's get started.\n" \
                " What name would you prefer to be called?\n"
 
     locations = []
@@ -210,8 +210,10 @@ def main():
     # start with location
     data = agent.interrogate(M001)
     state = agent.process(TYPE_LOCATION,data)
+    original = data.deepcopy()
     loc_prober = [M004,M005,M006,M007,M008]
     loc_pair = [1,2,3,4,6]
+    loc_filter = []
 
     # find valid location
     if state == ERR_LOCATION_NOT_INDICATED:
@@ -222,7 +224,9 @@ def main():
         if state == ERR_LOCATION_NOT_INDICATED:
             agent.reply(M003)
 
-        while((state == ERR_LOCATION_NOT_INDICATED) and (i<4)):
+
+
+        while (state == ERR_LOCATION_NOT_INDICATED) and (i < len(loc_filter)):
             answer = agent.interrogate(loc_prober[i])
             if answer.strip().lower() in AFFIRMATIONS:
                 data = str(loc_pair[i])
@@ -236,8 +240,8 @@ def main():
         elif state == ERR_NOT_COMPROMISED:
             agent.reply(M010)
         else:
-            # find a matching location
             agent.reply(M011)
+            # find a matching location
 
 
 if __name__ == "__main__":
