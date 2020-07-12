@@ -19,6 +19,10 @@ The agent must have an ability to learn, create new models,
 and find the source of infection based on built-up knowledge base.
 """
 
+TYPE_LOCATION = 1
+TYPE_CONTACT = 2
+TYPE_VISIT = 3
+
 class Agent():
     def __init__(self, greeting, name):
         self.id = "A00"
@@ -39,11 +43,30 @@ class Agent():
 
     def greet(self):
         referral = input(self.greeting)
+        # playsound('tester1.wav')
         self.individual.name = referral
         print("Hello, " + self.individual.name + "!")
 
     def interrogate(self,probe_id):
-        points = input(probe_id)
+        return input(probe_id)
+
+    def process(self,type,information):
+
+        def validate_location(information):
+            valid = False
+            for i in information:
+                try:
+                    place = int(i)
+                    return True
+                except:
+                    continue
+
+            return valid
+
+
+        if type == TYPE_LOCATION:
+
+
 
 class Individual:
     def __init__(self,name=""):
@@ -58,6 +81,7 @@ class Location:
     def match(self, location):
         for p in location.quarantines:
             if p in self.quarantines:
+                # print("1st Common Place Found: " + p) - DEBUGGER
                 return True
 
         return False
@@ -71,12 +95,7 @@ class Model:
         self.knowledge = knowledge
 
     def match(self, model):
-        base = model.knowledge.base
-
-        for i in base:
-            if i not in self.knowledge.base:
-                return False
-
+        base = model.knowledge
         return True
 
 class Knowledge:
