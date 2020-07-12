@@ -24,6 +24,7 @@ TYPE_LOCATION = 1
 TYPE_CONTACT = 2
 TYPE_VISIT = 3
 ERR_LOCATION_NOT_INDICATED = 4
+ERR_NOT_COMPROMISED = 5
 
 class Agent():
     def __init__(self, greeting, name):
@@ -65,6 +66,7 @@ class Agent():
                 try:
                     test = int(i)
                     if(isinstance(test,int)):
+                        print(test)
                         valid = True
                     break
                 except:
@@ -73,16 +75,19 @@ class Agent():
             return valid
 
         if type == TYPE_LOCATION:
-            print(validate_location(information))
+            return validate_location(information)
 
     def process(self,type=0,information=[]):
-        answer = ""
 
         if type == TYPE_LOCATION:
-            if (self.validate(TYPE_LOCATION, information) == False):
+
+            if not self.validate(TYPE_LOCATION, information):
                 return ERR_LOCATION_NOT_INDICATED
             else:
-                return 0
+                if(int(information) > 6 or int(information) < 0):
+                    return ERR_NOT_COMPROMISED
+                else:
+                    return -1
 
 
 class Individual:

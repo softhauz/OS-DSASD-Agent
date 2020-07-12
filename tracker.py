@@ -209,8 +209,8 @@ def main():
     # start with location
     data = agent.interrogate(M001)
     state = agent.process(TYPE_LOCATION,data)
-    loc_prober = [M004,M005,M006,M007]
-    print("STATE: " + str(state))
+    loc_prober = [M004,M005,M006,M007,M008]
+    loc_pair = [1,2,3,4,6]
 
     # find valid location
     if state == ERR_LOCATION_NOT_INDICATED:
@@ -222,13 +222,22 @@ def main():
             agent.reply(M003)
 
         while((state == ERR_LOCATION_NOT_INDICATED) and (i<4)):
-            data = agent.interrogate(loc_prober[i])
+            answer = agent.interrogate(loc_prober[i])
+            if answer.strip().lower() in AFFIRMATIONS:
+                data = str(loc_pair[i])
+
             state = agent.process(TYPE_LOCATION,data)
             i = i + 1
 
         if state == ERR_LOCATION_NOT_INDICATED:
-            print(M008)
+            agent.reply(M009)
             exit
+        elif state == ERR_NOT_COMPROMISED:
+            agent.reply(M010)
+        else:
+            # find a matching location
+            agent.reply()
+
 
 if __name__ == "__main__":
     main()
