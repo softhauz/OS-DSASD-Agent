@@ -26,6 +26,7 @@ class Agent():
         self.name = name
         self.models = []
         self.library = []
+        self.individual = Individual()
 
     def collect(self,information):
         self.library.append(information)
@@ -36,22 +37,21 @@ class Agent():
     def learn(self):
         return None
 
-    def interrogate(self):
+    def greet(self):
         referral = input(self.greeting)
-        individual = Individual(referral)
-        points = input(str(individual.name) + ", please tell me about all of the places that you've been to\n"
-                                     "  on 9th of January 2019, starting with the most recent.\n"
-                                     " For example, if you went to the gym at Location 1 and ate at a restaurant\n"
-                                     " at Location 4, you can simply type, 'gym 1 restaurant 4'.\n")
+        self.individual = Individual(referral)
+        print("Hello, " + self.individual.name + "!")
 
-
+    def interrogate(self,probe_id):
+        points = input("Please tell me about all of the places that you've been to\n"
+                       "  on 9th of January 2019, starting with the very first place you've visited on this day.\n"
+                       " For example, if you went to the gym at Location 1 and ate at a restaurant\n"
+                       " at Location 4, you can simply type, 'gym 1 restaurant 4'.")
 
 class Individual:
     def __init__(self,name):
         self.id = 0
         self.name = name
-        self.locations = []
-        self.contacts = []
 
 class Location:
     def __init__(self,id=0,quarantines=[]):
