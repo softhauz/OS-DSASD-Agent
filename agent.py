@@ -66,7 +66,6 @@ class Agent():
                 try:
                     test = int(i)
                     if(isinstance(test,int)):
-                        print(test)
                         valid = True
                     break
                 except:
