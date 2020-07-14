@@ -24,7 +24,7 @@ from agent import *
 """
 TYPE 1: Handle user inputs for locations.
 """
-input_location = "restaurant gym park 1 park 5"
+input_location = "restaurant gym park 1 park home 5 home"
 places = input_location.split()
 visited = []
 visit = Location()

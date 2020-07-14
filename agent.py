@@ -1,5 +1,6 @@
 from playsound import playsound
 from probes import *
+from location import *
 
 """
 Tracker
@@ -38,9 +39,6 @@ class Agent():
         self.library = []
         self.individual = Individual()
 
-    def collect(self,information):
-        self.library.append(information)
-
     def find(self,type=TYPE_LOCATION,input=""):
         prober = []
         points = [
@@ -54,6 +52,7 @@ class Agent():
 
         if type == TYPE_LOCATION:
             input = input.split()
+
             for i in input:
                 if any(place == i for place in points[0].quarantines) and (M004 not in prober):
                     prober.append(M004)
@@ -65,6 +64,8 @@ class Agent():
                     prober.append(M007)
                 if any(place == i for place in points[5].quarantines) and (M008 not in prober):
                     prober.append(M008)
+            return prober
+
         elif type == TYPE_RESPONSE_LOCATION:
             if input == M004:
                 return 1
@@ -79,22 +80,18 @@ class Agent():
 
         return prober
 
-    def learn(self):
-        return None
-
     def reply(self,message):
         print(message)
 
     def greet(self):
         referral = input(self.greeting)
-        # playsound('tester1.wav')
         self.individual.name = referral
         print("Hello, " + self.individual.name + "!")
 
-    def interrogate(self,probe_id):
+    def interrogate(self,probe_id=""):
         return input(probe_id)
 
-    def validate(self,type,information):
+    def validate(self,type=0,information=[]):
 
         def validate_location(information):
             valid = False
@@ -103,7 +100,7 @@ class Agent():
             for i in information:
                 try:
                     test = int(i)
-                    if(isinstance(test,int)):
+                    if isinstance(test, int):
                         valid = True
                     break
                 except:
@@ -116,39 +113,74 @@ class Agent():
 
     def process(self,type=0,information=[]):
 
+        # process data
         if type == TYPE_LOCATION:
 
             if not self.validate(TYPE_LOCATION, information):
                 return ERR_LOCATION_NOT_INDICATED
             else:
-                if(int(information) > 6 or int(information) < 0):
-                    return ERR_NOT_COMPROMISED
-                else:
-                    return -1
+                return self.process_locations()
 
+        # collect locations
+        def process_locations():
+            data = self.interrogate(M001)
+            state = self.process(TYPE_LOCATION,data)
+            original = data
+            loc_filter = self.find(TYPE_LOCATION,original)
+
+            # find valid location
+            if state == ERR_LOCATION_NOT_INDICATED:
+                data = self.interrogate(M002)
+                state = self.process(TYPE_LOCATION,data)
+                i = 0
+
+                if state == ERR_LOCATION_NOT_INDICATED:
+                    self.reply(M003)
+                    self.reply(M012)
+                    self.reply(original)
+
+                while (state == ERR_LOCATION_NOT_INDICATED) and (i < len(loc_filter)):
+                    answer = self.interrogate(loc_filter[i])
+
+                    if answer.strip().lower() in AFFIRMATIONS:
+                        data = str(self.find(TYPE_RESPONSE_LOCATION,loc_filter[i]))
+
+                    state = self.process(TYPE_LOCATION,data)
+                    i = i + 1
+
+                if state == ERR_LOCATION_NOT_INDICATED:
+                    self.reply(M009)
+                    exit
+                elif state == ERR_NOT_COMPROMISED:
+                    self.reply(M010)
+                else:
+                    self.reply(M011)
+
+    def collect(self,type=0,information=[]):
+
+        if type == TYPE_LOCATION:
+            places = information.split()
+            visited = []
+            location = Location()
+
+            for p in places:
+                try:
+                    location.id = int(p)
+                    visited.append(location)
+                    location = Location(0, [])
+                except:
+                    location.quarantines.append(p)
+                    continue
+
+            return visited
+
+    def learn(self):
+        return None
 
 class Individual:
     def __init__(self,name=""):
         self.id = 0
         self.name = name
-
-class Location:
-    def __init__(self,id=0,quarantines=[]):
-        self.id = id
-        self.quarantines = quarantines
-
-    def match(self, location=None):
-
-        if self.id == location.id:
-            for p in location.quarantines:
-                if p in self.quarantines:
-                    # print("1st Common Place Found: " + p) #----------- DEBUGGER
-                    return True
-
-        return False
-
-    def print(self):
-        print("Location " + str(self.id) + ": " + str(self.quarantines))
 
 class Model:
     def __init__(self,knowledge):

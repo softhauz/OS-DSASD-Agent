@@ -200,10 +200,6 @@ def main():
                " about how your day went on 9th of January 2020. Let's get started.\n" \
                " What name would you prefer to be called?\n"
 
-    locations = []
-    data = None
-    state = 0
-
     agent = Agent(greeting,"Karen")
     agent.greet()
 
@@ -240,7 +236,11 @@ def main():
             agent.reply(M010)
         else:
             agent.reply(M011)
+            print("[data] " + data)
             # find a matching location
+    else:
+        agent.reply(M011)
+        print("[data] " + data)
 
 
 if __name__ == "__main__":

@@ -37,3 +37,5 @@ M010 = "According to what you've told me, none of the places you've visited were
 M011 = "Great! Thank you for that information. Let's move on."
 
 M012 = "Here are the places you've mentioned: "
+
+M013 = "I've noticed that you have not indicated a location for " # followed by places mentioned
