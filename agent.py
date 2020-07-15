@@ -54,16 +54,17 @@ class Agent():
             input = input.split()
 
             for i in input:
-                if any(place == i for place in points[0].quarantines) and (M004 not in prober):
+                if any(place == i.strip() for place in points[0].quarantines) and (M004 not in prober):
                     prober.append(M004)
-                if any(place == i for place in points[1].quarantines) and (M005 not in prober):
+                if any(place == i.strip() for place in points[1].quarantines) and (M005 not in prober):
                     prober.append(M005)
-                if any(place == i for place in points[2].quarantines) and (M006 not in prober):
+                if any(place == i.strip() for place in points[2].quarantines) and (M006 not in prober):
                     prober.append(M006)
-                if any(place == i for place in points[3].quarantines) and (M007 not in prober):
+                if any(place == i.strip() for place in points[3].quarantines) and (M007 not in prober):
                     prober.append(M007)
-                if any(place == i for place in points[5].quarantines) and (M008 not in prober):
+                if any(place == i.strip() for place in points[5].quarantines) and (M008 not in prober):
                     prober.append(M008)
+
             return prober
 
         elif type == TYPE_RESPONSE_LOCATION:
@@ -81,7 +82,7 @@ class Agent():
         return prober
 
     def reply(self,message):
-        print(message)
+        print("[Agent "+self.name+"]:" + message)
 
     def greet(self):
         referral = input(self.greeting)
@@ -89,7 +90,7 @@ class Agent():
         print("Hello, " + self.individual.name + "!")
 
     def interrogate(self,probe_id=""):
-        return input(probe_id)
+        return input("[Agent "+self.name+"]:" + probe_id)
 
     def validate(self,type=0,information=[]):
 
@@ -134,34 +135,44 @@ class Agent():
                 state = self.process(TYPE_LOCATION,data)
                 i = 0
 
-                if state == ERR_LOCATION_NOT_INDICATED:
+                if state == ERR_LOCATION_NOT_INDICATED and len(loc_filter) > 0:
                     self.reply(M003)
                     self.reply(M012)
                     self.reply(original)
 
-                while (state == ERR_LOCATION_NOT_INDICATED) and (i < len(loc_filter)):
-                    answer = self.interrogate(loc_filter[i])
+                    while (state == ERR_LOCATION_NOT_INDICATED) and (i < len(loc_filter)):
+                        answer = self.interrogate(loc_filter[i])
 
-                    if answer.strip().lower() in AFFIRMATIONS:
-                        data = str(self.find(TYPE_RESPONSE_LOCATION,loc_filter[i]))
+                        if answer.strip().lower() in AFFIRMATIONS:
+                            data = str(self.find(TYPE_RESPONSE_LOCATION,loc_filter[i]))
 
-                    state = self.process(TYPE_LOCATION,data)
-                    i = i + 1
+                        state = self.process(TYPE_LOCATION,data)
+                        i = i + 1
 
-                if state == ERR_LOCATION_NOT_INDICATED:
-                    self.reply(M009)
-                    exit
-                elif state == ERR_NOT_COMPROMISED:
+                    if state == ERR_LOCATION_NOT_INDICATED:
+                        self.reply(M009)
+                        exit
+                    elif state == ERR_NOT_COMPROMISED:
+                        self.reply(M010)
+                    else:
+                        self.reply(M011)
+
+                elif state == ERR_LOCATION_NOT_INDICATED and len(loc_filter) == 0:
                     self.reply(M010)
-                else:
-                    self.reply(M011)
 
     def collect(self,type=0,information=[]):
 
         if type == TYPE_LOCATION:
+
             places = information.split()
             visited = []
             location = Location()
+            last = 0
+
+            try:
+                last = int(places[len(places) - 1])
+            except:
+                answer = self.interrogate(M013)
 
             for p in places:
                 try:
@@ -171,6 +182,7 @@ class Agent():
                 except:
                     location.quarantines.append(p)
                     continue
+
 
             return visited
 

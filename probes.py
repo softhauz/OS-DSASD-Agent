@@ -1,4 +1,4 @@
-AFFIRMATIONS = ["yes", "sure", "indeed", "y", "of course", "definitely", "yeah", "agreed", "affirmative", "absolutely", "ok", "okay"]
+AFFIRMATIONS = ["yes", "sure", "indeed", "y", "of course", "definitely", "yeah", "agreed", "affirmative", "absolutely", "ok", "okay", "right"]
 
 M001 = "Please tell me about all of the places that you've been to\n"\
        "on 9th of January 2020, starting with the very first place you've visited on this day.\n"\
@@ -6,7 +6,7 @@ M001 = "Please tell me about all of the places that you've been to\n"\
        "at Location 4, you can simply type, 'gym grocery 1 restaurant 4'.\n"
 
 M002 = "Hmmm. To clarify, are the places you've mentioned located at Location 1, Location 2,\n"\
-       "Location 3, Location 4, Location 5, or Location 6? You can just tell me the number.\n"\
+       "Location 3, Location 4, Location 5, or Location 6? You can just tell me the location code.\n"\
        "For example, if those places you've visited are at Location 3, simply enter 3.\n"
 
 M003 = "Let's see if I can find a match for the places you've mentioned."
@@ -38,4 +38,6 @@ M011 = "Great! Thank you for that information. Let's move on."
 
 M012 = "Here are the places you've mentioned: "
 
-M013 = "I've noticed that you have not indicated a location for " # followed by places mentioned
+M013 = "I've noticed that you have not indicated a location for the last places you've mentioned.\n" \
+       "Would you like to add a location for those places so I can process them?\n" \
+       "If yes, simply tell me the location code." \

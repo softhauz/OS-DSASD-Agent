@@ -189,7 +189,7 @@ MODEL_22 = Model(
 
 def main():
 
-    greeting = "Hi, I'm Karen Bot! I will be your knowledge-based agent for today.\n" \
+    greeting = " I will be your knowledge-based agent for today.\n" \
                " I am powered by an artificial intelligence that will help you find out\n" \
                " if you have contracted the Covid-19 disease on January 9, 2020\n" \
                " based on the information that I have. I will also be able to\n" \
@@ -200,11 +200,12 @@ def main():
                " about how your day went on 9th of January 2020. Let's get started.\n" \
                " What name would you prefer to be called?\n"
 
-    agent = Agent(greeting,"Karen")
+    agent = Agent(greeting,"Karen Bot")
+    agent.greeting = "Hi, I'm " + agent.name + "!" + agent.greeting
     agent.greet()
 
     # start with location
-    data = agent.interrogate(M001)
+    data = agent.interrogate(M001).strip()
     state = agent.process(TYPE_LOCATION,data)
     original = data
     loc_filter = agent.find(TYPE_LOCATION,original)
