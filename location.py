@@ -34,3 +34,12 @@ class Location:
 
     def print(self):
         print("Location " + str(self.id) + ": " + str(self.quarantines))
+
+QUARANTINES = [
+    Location(1,["office","gym","grocery store","house"]),
+    Location(2,["home"]),
+    Location(3,["home"]),
+    Location(4,["restaurant"]),
+    Location(5,["park","beach","mall"]),
+    Location(6,["campground"])
+]

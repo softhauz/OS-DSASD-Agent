@@ -1,6 +1,7 @@
 from playsound import playsound
 from probes import *
 from location import *
+from individual import *
 
 """
 Tracker
@@ -26,12 +27,13 @@ TYPE_LOCATION = 1
 TYPE_CONTACT = 2
 TYPE_VISIT = 3
 TYPE_RESPONSE_LOCATION = 6
+TYPE_COMPROMISED_LOCATION = 7
 ERR_LOCATION_NOT_INDICATED = 4
 ERR_NOT_COMPROMISED = 5
-
+SPACE = " "
 
 class Agent():
-    def __init__(self, greeting, name):
+    def __init__(self, greeting="", name=""):
         self.id = "A00"
         self.greeting = greeting
         self.name = name
@@ -41,28 +43,21 @@ class Agent():
 
     def find(self,type=TYPE_LOCATION,input=""):
         prober = []
-        points = [
-            Location(1, ["office", "gym", "grocery store", "house"]),
-            Location(2, ["home"]),
-            Location(3, ["home"]),
-            Location(4, ["restaurant"]),
-            Location(5, ["park", "beach", "mall"]),
-            Location(6, ["campground"])
-        ]
 
         if type == TYPE_LOCATION:
             input = input.split()
 
             for i in input:
-                if any(place == i.strip() for place in points[0].quarantines) and (M004 not in prober):
+                i = i.lower().strip()
+                if any(place.find(i) > -1 for place in QUARANTINES[0].quarantines) and (M004 not in prober):
                     prober.append(M004)
-                if any(place == i.strip() for place in points[1].quarantines) and (M005 not in prober):
+                if any(place.find(i) > -1 for place in QUARANTINES[1].quarantines) and (M005 not in prober):
                     prober.append(M005)
-                if any(place == i.strip() for place in points[2].quarantines) and (M006 not in prober):
+                if any(place.find(i) > -1 for place in QUARANTINES[2].quarantines) and (M006 not in prober):
                     prober.append(M006)
-                if any(place == i.strip() for place in points[3].quarantines) and (M007 not in prober):
+                if any(place.find(i) > -1 for place in QUARANTINES[3].quarantines) and (M007 not in prober):
                     prober.append(M007)
-                if any(place == i.strip() for place in points[5].quarantines) and (M008 not in prober):
+                if any(place.find(i) > -1 for place in QUARANTINES[5].quarantines) and (M008 not in prober):
                     prober.append(M008)
 
             return prober
@@ -82,15 +77,16 @@ class Agent():
         return prober
 
     def reply(self,message):
-        print("[Agent "+self.name+"]:" + message)
+        print("[Agent "+self.name+"]: " + message)
 
     def greet(self):
+        self.greeting = "[Agent "+self.name+"]: Hi, I'm " + self.name + "!" + self.greeting
         referral = input(self.greeting)
         self.individual.name = referral
         print("Hello, " + self.individual.name + "!")
 
     def interrogate(self,probe_id=""):
-        return input("[Agent "+self.name+"]:" + probe_id)
+        return input("[Agent "+self.name+"]: " + probe_id)
 
     def validate(self,type=0,information=[]):
 
@@ -103,7 +99,7 @@ class Agent():
                     test = int(i)
                     if isinstance(test, int):
                         valid = True
-                    break
+                    break # at least 1 indicated location
                 except:
                     continue
 
@@ -112,53 +108,100 @@ class Agent():
         if type == TYPE_LOCATION:
             return validate_location(information)
 
-    def process(self,type=0,information=[]):
-
-        # process data
-        if type == TYPE_LOCATION:
-
-            if not self.validate(TYPE_LOCATION, information):
-                return ERR_LOCATION_NOT_INDICATED
-            else:
-                return self.process_locations()
+    def process(self,type=0):
 
         # collect locations
-        def process_locations():
-            data = self.interrogate(M001)
-            state = self.process(TYPE_LOCATION,data)
+        def process_locations(agent=Agent(),data=""):
+            data = data.lower().strip()
             original = data
-            loc_filter = self.find(TYPE_LOCATION,original)
+            probes = agent.find(TYPE_LOCATION,original)
+            valid = agent.validate(TYPE_LOCATION, data)
 
-            # find valid location
-            if state == ERR_LOCATION_NOT_INDICATED:
-                data = self.interrogate(M002)
-                state = self.process(TYPE_LOCATION,data)
+            if not valid:
+                data = agent.interrogate(M002)
+                valid = agent.validate(TYPE_LOCATION, data)
                 i = 0
 
-                if state == ERR_LOCATION_NOT_INDICATED and len(loc_filter) > 0:
-                    self.reply(M003)
-                    self.reply(M012)
-                    self.reply(original)
+                if not valid and len(probes) > 0:
+                    agent.reply(M003)
+                    agent.reply(M012)
+                    agent.reply(original)
 
-                    while (state == ERR_LOCATION_NOT_INDICATED) and (i < len(loc_filter)):
-                        answer = self.interrogate(loc_filter[i])
+                    while (not valid) and (i < len(probes)):
+                        answer = agent.interrogate(probes[i])
 
                         if answer.strip().lower() in AFFIRMATIONS:
-                            data = str(self.find(TYPE_RESPONSE_LOCATION,loc_filter[i]))
+                            data = str(agent.find(TYPE_RESPONSE_LOCATION,probes[i]))
 
-                        state = self.process(TYPE_LOCATION,data)
+                        valid = agent.validate(TYPE_LOCATION, data)
                         i = i + 1
 
-                    if state == ERR_LOCATION_NOT_INDICATED:
-                        self.reply(M009)
+                    if not valid:
+                        state = ERR_LOCATION_NOT_INDICATED
+                        agent.reply(M009)
                         exit
-                    elif state == ERR_NOT_COMPROMISED:
-                        self.reply(M010)
                     else:
-                        self.reply(M011)
+                        original = SPACE.join((original,data))
+                        # print("INPUT: " + original) # DEBUGGER
+                        agent.reply(M011)
+                        visited = agent.collect(TYPE_LOCATION,original)
+                        compromised_visits = agent.collect(TYPE_COMPROMISED_LOCATION,visited)
 
-                elif state == ERR_LOCATION_NOT_INDICATED and len(loc_filter) == 0:
-                    self.reply(M010)
+                        # for v in agent.individual.visits:
+                        #     for q in QUARANTINES:
+                        #         if v.match(q) and (q not in compromised_visits):
+                        #             compromised_visits.append(q)
+
+                        if len(compromised_visits) == 0:
+                            agent.reply(M010)
+                        else:
+                            agent.individual.visits = compromised_visits
+
+                elif not valid and len(probes) == 0:
+                    agent.reply(M010)
+                else:
+                    original = SPACE.join((original,data))
+                    agent.reply(M011)
+                    visited = agent.collect(TYPE_LOCATION,original)
+                    compromised_visits = agent.collect(TYPE_COMPROMISED_LOCATION,visited)
+
+                    # for v in agent.individual.visits:
+                    #     for q in QUARANTINES:
+                    #         if v.match(q) and (q not in compromised_visits):
+                    #             compromised_visits.append(q)
+
+                    if len(compromised_visits) == 0:
+                        agent.reply(M010)
+                    else:
+                        agent.individual.visits = compromised_visits
+
+            else:
+                agent.reply(M011)
+                visited = agent.collect(TYPE_LOCATION,original)
+                compromised_visits = agent.collect(TYPE_COMPROMISED_LOCATION,visited)
+
+                # for v in agent.individual.visits:
+                #     for q in QUARANTINES:
+                #         if v.match(q) and (q not in compromised_visits):
+                #             compromised_visits.append(q)
+
+                if len(compromised_visits) == 0:
+                    agent.reply(M010)
+                else:
+                    agent.individual.visits = compromised_visits
+
+            # end process_locations()
+
+        if type == TYPE_LOCATION:
+            data = self.interrogate(M001)
+            process_locations(self,data)
+            compromised_visits = self.individual.visits
+
+            if len(compromised_visits) > 0:
+
+                print("On January 9, 2020, the compromised areas that you have visited are:\n")
+                for c in self.individual.visits:
+                    c.print()
 
     def collect(self,type=0,information=[]):
 
@@ -173,6 +216,12 @@ class Agent():
                 last = int(places[len(places) - 1])
             except:
                 answer = self.interrogate(M013)
+                answer = answer.strip()
+
+                try:
+                    places.append(int(answer))
+                except:
+                    self.reply(M014)
 
             for p in places:
                 try:
@@ -183,16 +232,23 @@ class Agent():
                     location.quarantines.append(p)
                     continue
 
-
             return visited
+
+        elif type == TYPE_COMPROMISED_LOCATION:
+            visits = information
+            compromised_visits = []
+
+            for v in visits:
+                for q in QUARANTINES:
+                    if v.match(q) and (q not in compromised_visits):
+                        compromised_visits.append(q)
+
+            return compromised_visits
 
     def learn(self):
         return None
 
-class Individual:
-    def __init__(self,name=""):
-        self.id = 0
-        self.name = name
+
 
 class Model:
     def __init__(self,knowledge):

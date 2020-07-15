@@ -38,6 +38,8 @@ M011 = "Great! Thank you for that information. Let's move on."
 
 M012 = "Here are the places you've mentioned: "
 
-M013 = "I've noticed that you have not indicated a location for the last places you've mentioned.\n" \
+M013 = "I've noticed that you have not indicated a location for the most recent places you've mentioned.\n" \
        "Would you like to add a location for those places so I can process them?\n" \
        "If yes, simply tell me the location code." \
+
+M014 = "All right. As per your request, I will ignore the most recent places mentioned.\n" \

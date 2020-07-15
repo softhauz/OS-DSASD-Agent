@@ -1,5 +1,4 @@
 from agent import *
-from probes import *
 
 """
 Tracker
@@ -20,15 +19,6 @@ disease from Location 1 to Location 6 in a span of 12-hour period on
 The agent must have an ability to learn, create new models,
 and find the source of infection based on built-up knowledge base.
 """
-
-QUARANTINES = [
-    Location(1,["office","gym","grocery store","house"]),
-    Location(2,["home"]),
-    Location(3,["home"]),
-    Location(4,["restaurant"]),
-    Location(5,["park","beach","mall"]),
-    Location(6,["campground"])
-]
 
 CONTACTS = ["AA","BA","CA","DA","EA","FA","GA","HA","IA","JG","AB","BB","CB","EB","Couple 1","Couple 2","Couple 3","Relatives","Six Friends","Locals","Socials"]
 
@@ -201,47 +191,47 @@ def main():
                " What name would you prefer to be called?\n"
 
     agent = Agent(greeting,"Karen Bot")
-    agent.greeting = "Hi, I'm " + agent.name + "!" + agent.greeting
     agent.greet()
+    agent.process(TYPE_LOCATION)
 
     # start with location
-    data = agent.interrogate(M001).strip()
-    state = agent.process(TYPE_LOCATION,data)
-    original = data
-    loc_filter = agent.find(TYPE_LOCATION,original)
-
-    # find valid location
-    if state == ERR_LOCATION_NOT_INDICATED:
-        data = agent.interrogate(M002)
-        state = agent.process(TYPE_LOCATION,data)
-        i = 0
-
-        if state == ERR_LOCATION_NOT_INDICATED:
-            agent.reply(M003)
-            agent.reply(M012)
-            agent.reply(original)
-
-        while (state == ERR_LOCATION_NOT_INDICATED) and (i < len(loc_filter)):
-            answer = agent.interrogate(loc_filter[i])
-
-            if answer.strip().lower() in AFFIRMATIONS:
-                data = str(agent.find(TYPE_RESPONSE_LOCATION,loc_filter[i]))
-
-            state = agent.process(TYPE_LOCATION,data)
-            i = i + 1
-
-        if state == ERR_LOCATION_NOT_INDICATED:
-            agent.reply(M009)
-            exit
-        elif state == ERR_NOT_COMPROMISED:
-            agent.reply(M010)
-        else:
-            agent.reply(M011)
-            print("[data] " + data)
-            # find a matching location
-    else:
-        agent.reply(M011)
-        print("[data] " + data)
+    # data = agent.interrogate(M001).strip()
+    # state = agent.process(TYPE_LOCATION,data)
+    # original = data
+    # loc_filter = agent.find(TYPE_LOCATION,original)
+    #
+    # # find valid location
+    # if state == ERR_LOCATION_NOT_INDICATED:
+    #     data = agent.interrogate(M002)
+    #     state = agent.process(TYPE_LOCATION,data)
+    #     i = 0
+    #
+    #     if state == ERR_LOCATION_NOT_INDICATED:
+    #         agent.reply(M003)
+    #         agent.reply(M012)
+    #         agent.reply(original)
+    #
+    #     while (state == ERR_LOCATION_NOT_INDICATED) and (i < len(loc_filter)):
+    #         answer = agent.interrogate(loc_filter[i])
+    #
+    #         if answer.strip().lower() in AFFIRMATIONS:
+    #             data = str(agent.find(TYPE_RESPONSE_LOCATION,loc_filter[i]))
+    #
+    #         state = agent.process(TYPE_LOCATION,data)
+    #         i = i + 1
+    #
+    #     if state == ERR_LOCATION_NOT_INDICATED:
+    #         agent.reply(M009)
+    #         exit
+    #     elif state == ERR_NOT_COMPROMISED:
+    #         agent.reply(M010)
+    #     else:
+    #         agent.reply(M011)
+    #         print("[data] " + data)
+    #         # find a matching location
+    # else:
+    #     agent.reply(M011)
+    #     print("[data] " + data)
 
 
 if __name__ == "__main__":
