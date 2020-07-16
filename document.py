@@ -1,5 +1,5 @@
 """
-Tracker
+Simultaneous Tracker: "Historian"
 
 Date: July 11, 2020
 Author: Karen Urate
@@ -11,12 +11,17 @@ inputs and encapsulating data into Tracker objects.
                            PROJECT DESCRIPTION
 ------------------------------------------------------------------
 Create a knowledge-based agent prototype that will compute and trace
-the source of infection for an individual who has contracted Covid-19
+for the source of infection for an individual who has contracted Covid-19
 disease from Location 1 to Location 6 in a span of 12-hour period on
 9th of January 2019, based on fictional raw data provided.
 
 The agent must have an ability to learn, create new models,
 and find the source of infection based on built-up knowledge base.
+
+Upon acquiring sufficient knowledge, the agent must be able to find
+the following: where the exact source of infection took place,
+who the infected individual/s are, and which location category
+the virus had been spread from.
 """
 
 from agent import *
@@ -61,3 +66,14 @@ for v in visited:
 
 if not found:
     print("Sorry, there is no match found.")
+
+"""
+TYPE 3: Writing to data file via append.
+"""
+f = open("data.py", "a")
+f.write("\n\n\"NEW MODEL BEING WRITTEN...\"")
+f.close()
+
+#open and read the file after the appending:
+f = open("data.py", "r")
+print(f.read())

@@ -1,26 +1,30 @@
-from playsound import playsound
 from probes import *
 from location import *
 from individual import *
 
 """
-Tracker
+Simultaneous Tracker: "Historian"
 
 Date: July 11, 2020
 Author: Karen Urate
 File: agent.py
-Description: This file contains the class objects for Tracker.
+Description: This file contains the class object representation for Agent.
 
 ------------------------------------------------------------------
                            PROJECT DESCRIPTION
 ------------------------------------------------------------------
 Create a knowledge-based agent prototype that will compute and trace
-the source of infection for an individual who has contracted Covid-19
+for the source of infection for an individual who has contracted Covid-19
 disease from Location 1 to Location 6 in a span of 12-hour period on
 9th of January 2019, based on fictional raw data provided.
 
 The agent must have an ability to learn, create new models,
 and find the source of infection based on built-up knowledge base.
+
+Upon acquiring sufficient knowledge, the agent must be able to find
+the following: where the exact source of infection took place,
+who the infected individual/s are, and which location category 
+the virus had been spread from.  
 """
 
 TYPE_LOCATION = 1
@@ -41,7 +45,7 @@ class Agent():
         self.library = []
         self.individual = Individual()
 
-    def find(self,type=TYPE_LOCATION,input=""):
+    def find(self, type=TYPE_LOCATION, input=""):
         prober = []
 
         if type == TYPE_LOCATION:
@@ -76,20 +80,22 @@ class Agent():
 
         return prober
 
-    def reply(self,message):
+    def reply(self, message):
         print("[Agent "+self.name+"]: " + message)
 
     def greet(self):
-        self.greeting = "[Agent "+self.name+"]: Hi, I'm " + self.name + "!" + self.greeting
+        self.greeting = "[Agent "+self.name+"]: Hi, I'm " \
+                        + self.name + "!" + self.greeting
         referral = input(self.greeting)
         self.individual.name = referral
         print("Hello, " + self.individual.name + "!")
 
-    def interrogate(self,probe_id=""):
+    def interrogate(self, probe_id=""):
         return input("[Agent "+self.name+"]: " + probe_id)
 
-    def validate(self,type=0,information=[]):
+    def validate(self, type=0, information=[]):
 
+        # validate location
         def validate_location(information):
             valid = False
             information = information.split()
@@ -108,13 +114,14 @@ class Agent():
         if type == TYPE_LOCATION:
             return validate_location(information)
 
-    def process(self,type=0):
+    def process(self, type=0):
 
-        # collect locations
-        def process_locations(agent=Agent(),data=""):
+        # process locations
+        def process_locations(agent=Agent(), data=""):
+
             data = data.lower().strip()
             original = data
-            probes = agent.find(TYPE_LOCATION,original)
+            probes = agent.find(TYPE_LOCATION, original)
             valid = agent.validate(TYPE_LOCATION, data)
 
             if not valid:
@@ -131,7 +138,7 @@ class Agent():
                         answer = agent.interrogate(probes[i])
 
                         if answer.strip().lower() in AFFIRMATIONS:
-                            data = str(agent.find(TYPE_RESPONSE_LOCATION,probes[i]))
+                            data = str(agent.find(TYPE_RESPONSE_LOCATION, probes[i]))
 
                         valid = agent.validate(TYPE_LOCATION, data)
                         i = i + 1
@@ -141,16 +148,11 @@ class Agent():
                         agent.reply(M009)
                         exit
                     else:
-                        original = SPACE.join((original,data))
-                        # print("INPUT: " + original) # DEBUGGER
+                        original = SPACE.join((original, data))
                         agent.reply(M011)
-                        visited = agent.collect(TYPE_LOCATION,original)
-                        compromised_visits = agent.collect(TYPE_COMPROMISED_LOCATION,visited)
-
-                        # for v in agent.individual.visits:
-                        #     for q in QUARANTINES:
-                        #         if v.match(q) and (q not in compromised_visits):
-                        #             compromised_visits.append(q)
+                        visited = agent.collect(TYPE_LOCATION, original)
+                        compromised_visits = agent.collect(TYPE_COMPROMISED_LOCATION, visited)
+                        # print("INPUT: " + original) # DEBUGGER
 
                         if len(compromised_visits) == 0:
                             agent.reply(M010)
@@ -160,15 +162,10 @@ class Agent():
                 elif not valid and len(probes) == 0:
                     agent.reply(M010)
                 else:
-                    original = SPACE.join((original,data))
+                    original = SPACE.join((original, data))
                     agent.reply(M011)
-                    visited = agent.collect(TYPE_LOCATION,original)
-                    compromised_visits = agent.collect(TYPE_COMPROMISED_LOCATION,visited)
-
-                    # for v in agent.individual.visits:
-                    #     for q in QUARANTINES:
-                    #         if v.match(q) and (q not in compromised_visits):
-                    #             compromised_visits.append(q)
+                    visited = agent.collect(TYPE_LOCATION, original)
+                    compromised_visits = agent.collect(TYPE_COMPROMISED_LOCATION, visited)
 
                     if len(compromised_visits) == 0:
                         agent.reply(M010)
@@ -177,33 +174,27 @@ class Agent():
 
             else:
                 agent.reply(M011)
-                visited = agent.collect(TYPE_LOCATION,original)
-                compromised_visits = agent.collect(TYPE_COMPROMISED_LOCATION,visited)
-
-                # for v in agent.individual.visits:
-                #     for q in QUARANTINES:
-                #         if v.match(q) and (q not in compromised_visits):
-                #             compromised_visits.append(q)
+                visited = agent.collect(TYPE_LOCATION, original)
+                compromised_visits = agent.collect(TYPE_COMPROMISED_LOCATION, visited)
 
                 if len(compromised_visits) == 0:
                     agent.reply(M010)
                 else:
                     agent.individual.visits = compromised_visits
-
             # end process_locations()
 
         if type == TYPE_LOCATION:
             data = self.interrogate(M001)
-            process_locations(self,data)
-            compromised_visits = self.individual.visits
+            process_locations(self, data)
 
-            if len(compromised_visits) > 0:
+            ''' DEBUGGER: Print locations from compromised_visits '''
+            # compromised_visits = self.individual.visits
+            # if len(compromised_visits) > 0:
+            #     print("On January 9, 2020, the compromised areas that you have visited are:\n")
+            #     for c in self.individual.visits:
+            #         c.print()
 
-                print("On January 9, 2020, the compromised areas that you have visited are:\n")
-                for c in self.individual.visits:
-                    c.print()
-
-    def collect(self,type=0,information=[]):
+    def collect(self, type=0, information=[]):
 
         if type == TYPE_LOCATION:
 
@@ -235,6 +226,7 @@ class Agent():
             return visited
 
         elif type == TYPE_COMPROMISED_LOCATION:
+
             visits = information
             compromised_visits = []
 
@@ -248,10 +240,9 @@ class Agent():
     def learn(self):
         return None
 
-
-
 class Model:
-    def __init__(self,knowledge):
+
+    def __init__(self, knowledge):
         self.id = 0
         self.knowledge = knowledge
 
@@ -260,7 +251,8 @@ class Model:
         return True
 
 class Knowledge:
-    def __init__(self,location,contact,visit):
+
+    def __init__(self, location, contact, visit):
         self.id = 0
         self.location = location
         self.contact = contact
