@@ -242,21 +242,22 @@ class Agent():
 
 class Model:
 
-    def __init__(self, knowledge):
+    def __init__(self, knowledge=None):
         self.id = 0
         self.knowledge = knowledge
 
-    def match(self, model):
-        base = model.knowledge
-        return True
+    def match(self, model=None):
+        if (self.location.match(model.knowledge.location)) and \
+            (any(self.knowledge.contacts == c for c in model.knowledge.contacts)) and \
+            (self.knowledge.source == model.knowledge.source):
+            return True
+
+        return False
 
 class Knowledge:
 
-    def __init__(self, location, contact, visit):
+    def __init__(self, location=None, contacts=[], source=""):
         self.id = 0
         self.location = location
-        self.contact = contact
-        self.visit = visit
-
-    def process(self, information):
-        return None
+        self.contacts = contacts
+        self.source = source

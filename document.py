@@ -70,10 +70,10 @@ if not found:
 """
 TYPE 3: Writing to data file via append.
 """
-f = open("data.py", "a")
+f = open("knowledge.txt", "a")
 f.write("\n\n\"NEW MODEL BEING WRITTEN...\"")
 f.close()
 
 #open and read the file after the appending:
-f = open("data.py", "r")
+f = open("knowledge.txt", "r")
 print(f.read())
