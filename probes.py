@@ -1,5 +1,7 @@
 AFFIRMATIONS = ["yes", "sure", "indeed", "y", "of course", "definitely", "yeah", "agreed", "affirmative", "absolutely", "ok", "okay", "right"]
 
+DENIALS = ["no", "nope", "no one", "none", "not"]
+
 M001 = "Please tell me about all of the places that you've been to\n"\
        "on 9th of January 2020, starting with the very first place you've visited on this day.\n"\
        "For example, if you went to the gym and grocery store at Location 1, then, ate at a restaurant\n"\
@@ -43,3 +45,19 @@ M013 = "I've noticed that you have not indicated a location for the most recent 
        "If yes, simply tell me the location code." \
 
 M014 = "All right. As per your request, I will ignore the most recent places mentioned.\n" \
+
+M015 = "Who are the people that you have socially interacted with?\n"
+
+M016 = "Since you did not have any social interaction on January 9, 2020 within the compromised areas\n" \
+       "that you have mentioned, you do not seem to have contracted the Covid-19 disease on that day."
+
+M017 = "In order to verify the accuracy of my data connections, I have to confirm a few things\n" \
+       "with you."
+
+M018 = "Do you remember the chronological order of your social interactions?\n"
+
+M019 = "Did your first social interaction occur with AA?\n"
+M020 = "Did your first social interaction occur with BA?\n"
+M021 = "Did your first social interaction occur with CA?\n"
+
+M022 = "Did you perform the jazz dance routine with DA on January 9, 2020?\n"

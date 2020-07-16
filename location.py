@@ -19,7 +19,7 @@ and find the source of infection based on built-up knowledge base.
 
 Upon acquiring sufficient knowledge, the agent must be able to find
 the following: where the exact source of infection took place,
-who the infected individual/s are, and which location category
+from whom the viral infection possibly came from, and which location category
 the virus had been spread from.
 """
 class Location:
@@ -40,11 +40,5 @@ class Location:
     def print(self):
         print("Location " + str(self.id) + ": " + str(self.quarantines))
 
-QUARANTINES = [
-    Location(1,["office","gym","grocery store","house"]),
-    Location(2,["house"]),
-    Location(3,["house"]),
-    Location(4,["restaurant"]),
-    Location(5,["park","beach","mall"]),
-    Location(6,["campground"])
-]
+    def text(self):
+        return "Location " + str(self.id) + ": " + str(self.quarantines)

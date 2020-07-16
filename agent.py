@@ -1,6 +1,6 @@
 from probes import *
-from location import *
 from individual import *
+from data import *
 
 """
 Simultaneous Tracker: "Historian"
@@ -23,13 +23,13 @@ and find the source of infection based on built-up knowledge base.
 
 Upon acquiring sufficient knowledge, the agent must be able to find
 the following: where the exact source of infection took place,
-who the infected individual/s are, and which location category 
+from whom the viral infection possibly came from, and which location category 
 the virus had been spread from.  
 """
 
 TYPE_LOCATION = 1
 TYPE_CONTACT = 2
-TYPE_VISIT = 3
+TYPE_SOURCE = 3
 TYPE_RESPONSE_LOCATION = 6
 TYPE_COMPROMISED_LOCATION = 7
 ERR_LOCATION_NOT_INDICATED = 4
@@ -37,12 +37,11 @@ ERR_NOT_COMPROMISED = 5
 SPACE = " "
 
 class Agent():
+
     def __init__(self, greeting="", name=""):
         self.id = "A00"
         self.greeting = greeting
         self.name = name
-        self.models = []
-        self.library = []
         self.individual = Individual()
 
     def find(self, type=TYPE_LOCATION, input=""):
@@ -77,6 +76,9 @@ class Agent():
                 return 4
             elif input == M008:
                 return 6
+
+        elif type == TYPE_SOURCE:
+            self.connect()
 
         return prober
 
@@ -116,8 +118,8 @@ class Agent():
 
     def process(self, type=0):
 
-        # process locations
-        def process_locations(agent=Agent(), data=""):
+        # get locations
+        def get_locations(agent=Agent(), data=""):
 
             data = data.lower().strip()
             original = data
@@ -181,18 +183,74 @@ class Agent():
                     agent.reply(M010)
                 else:
                     agent.individual.visits = compromised_visits
-            # end process_locations()
+            # end get_locations()
 
-        if type == TYPE_LOCATION:
-            data = self.interrogate(M001)
-            process_locations(self, data)
+        data = self.interrogate(M001)
+        get_locations(self, data)
 
-            ''' DEBUGGER: Print locations from compromised_visits '''
-            # compromised_visits = self.individual.visits
-            # if len(compromised_visits) > 0:
-            #     print("On January 9, 2020, the compromised areas that you have visited are:\n")
-            #     for c in self.individual.visits:
-            #         c.print()
+        ''' DEBUGGER: Print locations from compromised_visits '''
+        compromised_visits = self.individual.visits
+        if len(compromised_visits) > 0:
+            print("On January 9, 2020, the compromised areas that you have visited are:\n")
+            for c in self.individual.visits:
+                c.print()
+
+        self.individual.model = Model()
+        self.connect()
+
+    def connect(self):
+        self.reply(M017)
+
+        for v in self.individual.visits:
+            found = False
+
+            for place in v.quarantines:
+                if place in QUARANTINES[0].quarantines and v.id == 1 and place == "office":
+                    answer = self.interrogate(M018)
+
+                    if answer not in AFFIRMATIONS:
+                        self.individual.source = "AA, BA, or CA"
+                        self.individual.model.knowledge = Knowledge(QUARANTINES[0],["AA","BA","CA"],"office")
+                        self.individual.model.check(MODELS)
+                        found = True
+                        break
+                    else:
+                        prober = [M019, M020, M021]
+                        possibilities = ["AA", "BA", "CA"]
+                        i = 0
+
+                        while answer not in AFFIRMATIONS and (i < len(prober)):
+                            answer = self.interrogate(prober[i])
+                            i = i + 1
+
+                        i = i - 1
+
+                        if answer not in AFFIRMATIONS:
+                            self.individual.source = "AA, BA, or CA"
+                            self.individual.model.knowledge = Knowledge(QUARANTINES[0],["AA","BA","CA"],"office")
+                            self.individual.model.check(MODELS)
+                            found = True
+                            break
+                        else:
+                            self.individual.source = possibilities[i]
+                            self.individual.model.knowledge = Knowledge(QUARANTINES[0],[possibilities[i]],"office")
+                            self.individual.model.check(MODELS)
+                            found = True
+                            break
+
+                elif place in QUARANTINES[0].quarantines and v.id == 1 and place == "gym":
+                    answer = self.interrogate(M022)
+                    if answer not in AFFIRMATIONS:
+                        continue
+                    else:
+                        self.individual.source = "DA"
+                        self.individual.model.knowledge = Knowledge(QUARANTINES[0],["DA"],"gym")
+                        self.individual.model.check(MODELS)
+                        found = True
+                        break
+
+            if found:
+                break
 
     def collect(self, type=0, information=[]):
 
@@ -232,32 +290,11 @@ class Agent():
 
             for v in visits:
                 for q in QUARANTINES:
-                    if v.match(q) and (q not in compromised_visits):
-                        compromised_visits.append(q)
+                    if v.match(q) and (v not in compromised_visits):
+                        compromised_visits.append(v)
 
             return compromised_visits
 
     def learn(self):
         return None
 
-class Model:
-
-    def __init__(self, knowledge=None):
-        self.id = 0
-        self.knowledge = knowledge
-
-    def match(self, model=None):
-        if (self.location.match(model.knowledge.location)) and \
-            (any(self.knowledge.contacts == c for c in model.knowledge.contacts)) and \
-            (self.knowledge.source == model.knowledge.source):
-            return True
-
-        return False
-
-class Knowledge:
-
-    def __init__(self, location=None, contacts=[], source=""):
-        self.id = 0
-        self.location = location
-        self.contacts = contacts
-        self.source = source

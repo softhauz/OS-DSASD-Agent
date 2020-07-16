@@ -6,7 +6,8 @@ Simultaneous Tracker: "Historian"
 Date: July 11, 2020
 Author: Karen Urate
 File: historian.py
-Description: This file is the main runner for Simultaneous Tracker.  
+Description: This file is the main runner for Simultaneous Tracker:
+Historian.  
 
 ------------------------------------------------------------------
                            PROJECT DESCRIPTION
@@ -21,166 +22,10 @@ and find the source of infection based on built-up knowledge base.
 
 Upon acquiring sufficient knowledge, the agent must be able to find
 the following: where the exact source of infection took place,
-who the infected individual/s are, and which location category 
+from whom the viral infection possibly came from, and which location category 
 the virus had been spread from.  
 
 """
-
-CONTACTS = ["AA","BA","CA","DA","EA","FA","GA","HA","IA","JG","AB","BB","CB","EB","Couple 1","Couple 2","Couple 3","Relatives","Six Friends","Locals","Socials"]
-
-MODEL_1 = Model(
-    Knowledge(
-        QUARANTINES[0],
-        ["AA","BA","CA"],
-        "office"
-    ))
-
-MODEL_2 = Model(
-    Knowledge(
-        QUARANTINES[0],
-        ["AA"],
-        "office"
-    ))
-
-MODEL_3 = Model(
-    Knowledge(
-        QUARANTINES[0],
-        ["BA"],
-        "office"
-    ))
-
-MODEL_4 = Model(
-    Knowledge(
-        QUARANTINES[0],
-        ["CA"],
-        "office"
-    ))
-
-MODEL_5 = Model(
-    Knowledge(
-        QUARANTINES[0],
-        ["EA"],
-        "grocery store"
-    ))
-
-MODEL_6 = Model(
-    Knowledge(
-        QUARANTINES[0],
-        ["BA"],
-        "house"
-    ))
-
-MODEL_7 = Model(
-    Knowledge(
-        QUARANTINES[0],
-        ["CA"],
-        "house"
-    ))
-
-MODEL_8 = Model(
-    Knowledge(
-        QUARANTINES[0],
-        ["BA","CA"],
-        "house"
-    ))
-
-MODEL_9 = Model(
-    Knowledge(
-        QUARANTINES[0],
-        ["DA"],
-        "gym"
-    ))
-
-MODEL_10 = Model(
-    Knowledge(
-        QUARANTINES[5],
-        ["six friends"],
-        "campground"
-    ))
-
-MODEL_11 = Model(
-    Knowledge(
-        QUARANTINES[5],
-        ["CB"],
-        "campground"
-    ))
-
-MODEL_12 = Model(
-    Knowledge(
-        QUARANTINES[5],
-        ["EB"],
-        "campground"
-    ))
-
-MODEL_13 = Model(
-    Knowledge(
-        QUARANTINES[5],
-        ["CB","EB"],
-        "campground"
-    ))
-
-MODEL_14 = Model(
-    Knowledge(
-        QUARANTINES[1],
-        ["AB"],
-        "home"
-    ))
-
-MODEL_15 = Model(
-    Knowledge(
-        QUARANTINES[1],
-        ["BB"],
-        "home"
-    ))
-
-MODEL_16 = Model(
-    Knowledge(
-        QUARANTINES[1],
-        ["AB","BB"],
-        "home"
-    ))
-
-MODEL_17 = Model(
-    Knowledge(
-        QUARANTINES[2],
-        ["AB"],
-        "home"
-    ))
-
-MODEL_18 = Model(
-    Knowledge(
-        QUARANTINES[2],
-        ["BB"],
-        "home"
-    ))
-
-MODEL_19 = Model(
-    Knowledge(
-        QUARANTINES[2],
-        ["AB","BB"],
-        "home"
-    ))
-
-MODEL_20 = Model(
-    Knowledge(
-        QUARANTINES[3],
-        ["CB"],
-        "restaurant"
-    ))
-
-MODEL_21 = Model(
-    Knowledge(
-        QUARANTINES[3],
-        ["EB"],
-        "restaurant"
-    ))
-
-MODEL_22 = Model(
-    Knowledge(
-        QUARANTINES[3],
-        ["CB","EB"],
-        "restaurant"
-    ))
 
 def main():
 
@@ -197,47 +42,7 @@ def main():
 
     agent = Agent(greeting,"Karen Bot")
     agent.greet()
-    agent.process(TYPE_LOCATION)
-
-    # start with location
-    # data = agent.interrogate(M001).strip()
-    # state = agent.process(TYPE_LOCATION,data)
-    # original = data
-    # loc_filter = agent.find(TYPE_LOCATION,original)
-    #
-    # # find valid location
-    # if state == ERR_LOCATION_NOT_INDICATED:
-    #     data = agent.interrogate(M002)
-    #     state = agent.process(TYPE_LOCATION,data)
-    #     i = 0
-    #
-    #     if state == ERR_LOCATION_NOT_INDICATED:
-    #         agent.reply(M003)
-    #         agent.reply(M012)
-    #         agent.reply(original)
-    #
-    #     while (state == ERR_LOCATION_NOT_INDICATED) and (i < len(loc_filter)):
-    #         answer = agent.interrogate(loc_filter[i])
-    #
-    #         if answer.strip().lower() in AFFIRMATIONS:
-    #             data = str(agent.find(TYPE_RESPONSE_LOCATION,loc_filter[i]))
-    #
-    #         state = agent.process(TYPE_LOCATION,data)
-    #         i = i + 1
-    #
-    #     if state == ERR_LOCATION_NOT_INDICATED:
-    #         agent.reply(M009)
-    #         exit
-    #     elif state == ERR_NOT_COMPROMISED:
-    #         agent.reply(M010)
-    #     else:
-    #         agent.reply(M011)
-    #         print("[data] " + data)
-    #         # find a matching location
-    # else:
-    #     agent.reply(M011)
-    #     print("[data] " + data)
-
+    agent.process()
 
 if __name__ == "__main__":
     main()

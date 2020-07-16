@@ -20,7 +20,7 @@ and find the source of infection based on built-up knowledge base.
 
 Upon acquiring sufficient knowledge, the agent must be able to find
 the following: where the exact source of infection took place,
-who the infected individual/s are, and which location category
+from whom the viral infection possibly came from, and which location category
 the virus had been spread from.
 """
 
@@ -71,9 +71,11 @@ if not found:
 TYPE 3: Writing to data file via append.
 """
 f = open("knowledge.txt", "a")
-f.write("\n\n\"NEW MODEL BEING WRITTEN...\"")
+text = "QUARANTINES[0] ['AA','BA','CA'] office"
+f.write(text)
 f.close()
 
 #open and read the file after the appending:
 f = open("knowledge.txt", "r")
 print(f.read())
+

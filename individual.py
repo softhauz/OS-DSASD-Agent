@@ -19,15 +19,18 @@ and find the source of infection based on built-up knowledge base.
 
 Upon acquiring sufficient knowledge, the agent must be able to find
 the following: where the exact source of infection took place,
-who the infected individual/s are, and which location category
+from whom the viral infection possibly came from, and which location category
 the virus had been spread from.
 """
 class Individual:
-    def __init__(self, name="", visits=[], contacts=[]):
+
+    def __init__(self, name="", visits=[], source="", model=None):
         self.id = 0
         self.name = name
         self.visits = visits
-        self.contacts = contacts
+        self.source = source
+        self.model = model
 
-    def connect(self, location=None):
-        return None
+
+
+
