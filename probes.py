@@ -3,9 +3,9 @@ AFFIRMATIONS = ["yes", "sure", "indeed", "y", "of course", "definitely", "yeah",
 DENIALS = ["no", "nope", "no one", "none", "not"]
 
 M001 = "Please tell me about all of the places that you've been to\n"\
-       "on 9th of January 2020, starting with the very first place you've visited on this day.\n"\
+       "on 9th of January 2020, in any order.\n"\
        "For example, if you went to the gym and grocery store at Location 1, then, ate at a restaurant\n"\
-       "at Location 4, you can simply type, 'gym grocery 1 restaurant 4'.\n"
+       "at Location 4, you can say, 'restaurant 4 gym grocery 1' or 'gym grocery 1 restaurant 4'.\n"
 
 M002 = "Hmmm. To clarify, are the places you've mentioned located at Location 1, Location 2,\n"\
        "Location 3, Location 4, Location 5, or Location 6? You can just tell me the location code.\n"\
