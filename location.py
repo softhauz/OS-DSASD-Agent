@@ -31,7 +31,7 @@ class Location:
 
         if self.id == location.id:
             for p in location.quarantines:
-                if p in self.quarantines:
+                if p in self.quarantines or any(q.find(p) > -1 for q in location.quarantines):
                     # print("1st Common Place Found: " + p) #----------- DEBUGGER
                     return True
 

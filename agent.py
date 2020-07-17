@@ -9,6 +9,8 @@ Date: July 11, 2020
 Author: Karen Urate
 File: agent.py
 Description: This file contains the class object representation for Agent.
+Agent will create and utilize data relations,
+and probe and collection information from individuals.
 
 ------------------------------------------------------------------
                            PROJECT DESCRIPTION
@@ -88,9 +90,8 @@ class Agent():
     def greet(self):
         self.greeting = "[Agent "+self.name+"]: Hi, I'm " \
                         + self.name + "!" + self.greeting
-        referral = input(self.greeting)
-        self.individual.name = referral
-        print("Hello, " + self.individual.name + "!")
+        self.individual.name = input(self.greeting)
+        self.reply("Hello, " + self.individual.name + "!")
 
     def interrogate(self, probe_id=""):
         return input("[Agent "+self.name+"]: " + probe_id)
@@ -116,7 +117,7 @@ class Agent():
         if type == TYPE_LOCATION:
             return validate_location(information)
 
-    def process(self, type=0):
+    def process(self, type=TYPE_LOCATION):
 
         # get locations
         def get_locations(agent=Agent(), data=""):
@@ -171,6 +172,7 @@ class Agent():
 
                     if len(compromised_visits) == 0:
                         agent.reply(M010)
+                        exit
                     else:
                         agent.individual.visits = compromised_visits
 
@@ -183,7 +185,7 @@ class Agent():
                     agent.reply(M010)
                 else:
                     agent.individual.visits = compromised_visits
-            # end get_locations()
+        # end get_locations()
 
         data = self.interrogate(M001)
         get_locations(self, data)
@@ -191,7 +193,7 @@ class Agent():
         ''' DEBUGGER: Print locations from compromised_visits '''
         compromised_visits = self.individual.visits
         if len(compromised_visits) > 0:
-            print("On January 9, 2020, the compromised areas that you have visited are:\n")
+            self.reply("On January 9, 2020, the compromised areas that you have visited are:")
             for c in self.individual.visits:
                 c.print()
 
@@ -204,7 +206,10 @@ class Agent():
         for v in self.individual.visits:
             found = False
 
+            # Probe for every visited area in current location (v)
             for place in v.quarantines:
+
+                # LOCATION 1 - OFFICE
                 if place in QUARANTINES[0].quarantines and v.id == 1 and place == "office":
                     answer = self.interrogate(M018)
 
@@ -213,7 +218,7 @@ class Agent():
                         self.individual.model.knowledge = Knowledge(QUARANTINES[0],["AA","BA","CA"],"office")
                         self.individual.model.check(MODELS)
                         found = True
-                        break
+                        break # source is found
                     else:
                         answer = self.interrogate(M019)
                         prober = [M020, M021]
@@ -236,14 +241,15 @@ class Agent():
                                 self.individual.model.knowledge = Knowledge(QUARANTINES[0],["AA","BA","CA"],"office")
                                 self.individual.model.check(MODELS)
                                 found = True
-                                break
+                                break # source is found
                             else:
                                 self.individual.source = possibilities[i]
                                 self.individual.model.knowledge = Knowledge(QUARANTINES[0],[possibilities[i]],"office")
                                 self.individual.model.check(MODELS)
                                 found = True
-                                break
+                                break # source is found
 
+                # LOCATION 1 - GYM
                 elif place in QUARANTINES[0].quarantines and v.id == 1 and place == "gym":
                     answer = self.interrogate(M022)
                     if answer not in AFFIRMATIONS:
@@ -253,10 +259,66 @@ class Agent():
                         self.individual.model.knowledge = Knowledge(QUARANTINES[0],["DA"],"gym")
                         self.individual.model.check(MODELS)
                         found = True
-                        break
+                        break # source is found
 
+                # LOCATION 1 - GROCERY STORE
+                elif place in QUARANTINES[0].quarantines and v.id == 1 and (place.find("grocery") > -1 or place.find("store") > -1):
+                    answer = self.interrogate(M023)
+
+                    if answer not in AFFIRMATIONS:
+                        continue # source did not come from this place
+                    else:
+                        self.individual.source = "EA"
+                        self.individual.model.knowledge = Knowledge(QUARANTINES[0],["EA"],"grocery store")
+                        self.individual.model.check(MODELS)
+                        found = True
+                        break # source is found
+
+                # LOCATION 1 - HOUSE
+                elif place in QUARANTINES[0].quarantines and v.id == 1 and (place.find("grocery") > -1 or place.find("store") > -1):
+                    answer = self.interrogate(M024)
+
+                    if answer not in AFFIRMATIONS:
+                        continue # source did not come from this place
+                    else:
+                        answer = self.interrogate(M018)
+                        if answer not in AFFIRMATIONS:
+                            self.individual.source = "BA or CA"
+                            self.individual.model.knowledge = Knowledge(QUARANTINES[0],["BA","CA"],"house")
+                            self.individual.model.check(MODELS)
+                            found = True
+                            break # source is found
+                        else:
+                            answer = self.interrogate(M026)
+                            prober = [M027, M028]
+                            possibilities = ["CA", "BA or CA"]
+                            i = 0
+
+                            if answer in AFFIRMATIONS:
+                                self.individual.source = "BA"
+                                self.individual.model.knowledge = Knowledge(QUARANTINES[0],["BA"],"house")
+                                self.individual.model.check(MODELS)
+                                found = True
+                                break # source is found
+                            else:
+                                while answer not in AFFIRMATIONS and (i < len(prober)):
+                                    answer = self.interrogate(prober[i])
+                                    i = i + 1
+
+                                i = i - 1
+
+                                if answer not in AFFIRMATIONS:
+                                    continue # source did not come from this place
+                                else:
+                                    self.individual.source = possibilities[i]
+                                    self.individual.model.knowledge = Knowledge(QUARANTINES[0], [possibilities[i]],"house")
+                                    self.individual.model.check(MODELS)
+                                    found = True
+                                    break  # source is found
             if found:
                 break
+            # else:
+                # learn
 
     def collect(self, type=0, information=[]):
 

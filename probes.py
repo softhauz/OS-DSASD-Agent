@@ -46,7 +46,9 @@ M013 = "I've noticed that you have not indicated a location for the most recent 
 
 M014 = "All right. As per your request, I will ignore the most recent places mentioned.\n" \
 
-M015 = "Who are the people that you have socially interacted with?\n"
+M015 = "Hmmm. I couldn't seem to find a model for your input. As I've said, \n" \
+       "I'm continuously learning. Can you tell me who are the people that you have socially interacted with\n" \
+       "at this location so I can create a new model?"
 
 M016 = "Since you did not have any social interaction on January 9, 2020 within the compromised areas\n" \
        "that you have mentioned, you do not seem to have contracted the Covid-19 disease on that day."
@@ -54,11 +56,28 @@ M016 = "Since you did not have any social interaction on January 9, 2020 within 
 M017 = "In order to verify the accuracy of my data connections, I have to confirm a few things\n" \
        "with you."
 
-M018 = "I will now probe about your visit on the next location. \n" \
+M018 = "I will now probe regarding your visit on the next location. \n" \
        "Do you remember the chronological order of your social interactions?\n"
 
 M019 = "Did your first social interaction occur with AA?\n"
+
 M020 = "Did your first social interaction occur with BA?\n"
+
 M021 = "Did your first social interaction occur with CA?\n"
 
 M022 = "Did you perform the jazz dance routine with DA on January 9, 2020?\n"
+
+M023 = "Have you purchased any green leafy vegetable from the grocery store at this location on January 9, 2020?\n"
+
+M024 = "Have you been to a dinner party with BA and CA on January 9, 2020 at Location 1?\n"
+
+M025 = "Perfect! Go ahead and tell me their names." # --- continuation of M015
+
+M026 = "Did your first social interaction in the dinner party occur with BA or anyone who " \
+       "came in close contact with BA on January 9, 2020 at Location 1?\n"
+
+M027 = "Did your first social interaction in the dinner party occur with CA or anyone who " \
+       "came in close contact with CA on January 9, 2020 at Location 1?\n"
+
+M028 = "I assume that you have consumed food in the dinner party on January 9, 2020 at Location 1.\n" \
+       "Will that be correct?"
