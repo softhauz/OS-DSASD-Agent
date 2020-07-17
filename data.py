@@ -24,7 +24,7 @@ MODEL_1 = Model(
         ["AA","BA","CA"],
         "office"
     ),
-    "You have acquired Covid-19 disease on January 9, 2020 at Location 1 from AA, BA, or CA in the office meeting."
+    "You have contracted Covid-19 disease on January 9, 2020 at Location 1 from AA, BA, or CA in the office meeting."
 )
 
 MODEL_2 = Model(
@@ -33,7 +33,7 @@ MODEL_2 = Model(
         ["AA"],
         "office"
     ),
-    "You have acquired Covid-19 disease on January 9, 2020 at Location 1 from AA in the office meeting.")
+    "You have contracted Covid-19 disease on January 9, 2020 at Location 1 from AA in the office meeting.")
 
 MODEL_3 = Model(
     Knowledge(
@@ -41,7 +41,7 @@ MODEL_3 = Model(
         ["BA"],
         "office"
     ),
-    "You have acquired Covid-19 disease on January 9, 2020 at Location 1 from BA in the office meeting.")
+    "You have contracted Covid-19 disease on January 9, 2020 at Location 1 from BA in the office meeting.")
 
 MODEL_4 = Model(
     Knowledge(
@@ -49,7 +49,7 @@ MODEL_4 = Model(
         ["CA"],
         "office"
     ),
-    "You have acquired Covid-19 disease on January 9, 2020 at Location 1 from CA in the office meeting.")
+    "You have contracted Covid-19 disease on January 9, 2020 at Location 1 from CA in the office meeting.")
 
 MODEL_5 = Model(
     Knowledge(
@@ -57,7 +57,7 @@ MODEL_5 = Model(
         ["EA"],
         "grocery store"
     ),
-    "You have acquired Covid-19 disease on January 9, 2020 at Location 1 through consumption of food that came in contact with EA from the grocery store.")
+    "You have contracted Covid-19 disease on January 9, 2020 at Location 1 through consumption of food that came in contact with EA from the grocery store.")
 
 MODEL_6 = Model(
     Knowledge(
@@ -65,7 +65,7 @@ MODEL_6 = Model(
         ["BA"],
         "house"
     ),
-    "You have acquired Covid-19 disease on January 9, 2020 at Location 1 through a social interaction with BA in the dinner party.")
+    "You have contracted Covid-19 disease on January 9, 2020 at Location 1 through a social interaction with BA in the dinner party.")
 
 MODEL_7 = Model(
     Knowledge(
@@ -73,7 +73,7 @@ MODEL_7 = Model(
         ["CA"],
         "house"
     ),
-    "You have acquired Covid-19 disease on January 9, 2020 at Location 1 through a social interaction with CA in the dinner party.")
+    "You have contracted Covid-19 disease on January 9, 2020 at Location 1 through a social interaction with CA in the dinner party.")
 
 MODEL_8 = Model(
     Knowledge(
@@ -81,7 +81,7 @@ MODEL_8 = Model(
         ["BA","CA"],
         "house"
     ),
-    "You have acquired Covid-19 disease on January 9, 2020 at Location 1 through a social interaction with BA or CA in the dinner party.")
+    "You have contracted Covid-19 disease on January 9, 2020 at Location 1 through a social interaction with BA or CA in the dinner party.")
 
 MODEL_9 = Model(
     Knowledge(
@@ -89,7 +89,7 @@ MODEL_9 = Model(
         ["DA"],
         "gym"
     ),
-    "You have acquired Covid-19 disease on January 9, 2020 at Location 1 from DA through the jazz dance routine in the gym's dance studio.")
+    "You have contracted Covid-19 disease on January 9, 2020 at Location 1 from DA through the jazz dance routine in the gym's dance studio.")
 
 MODEL_10 = Model(
     Knowledge(
@@ -97,7 +97,7 @@ MODEL_10 = Model(
         ["six friends"],
         "campground"
     ),
-    "You have acquired Covid-19 disease on January 9, 2020 at Location 6 from a social interaction with one or more of Couple 2's six friends in the camp bonfire.")
+    "You have contracted Covid-19 disease on January 9, 2020 at Location 6 from a social interaction with one or more of Couple 2's six friends in the camp bonfire.")
 
 MODEL_11 = Model(
     Knowledge(
@@ -105,7 +105,7 @@ MODEL_11 = Model(
         ["CB"],
         "campground"
     ),
-    "You have acquired Covid-19 disease on January 9, 2020 at Location 6 from a social interaction with one or more of Couple 2's six friends in the camp bonfire.")
+    "You have contracted Covid-19 disease on January 9, 2020 at Location 6 from a social interaction with one or more of Couple 2's six friends in the camp bonfire.")
 
 MODEL_12 = Model(
     Knowledge(
@@ -113,7 +113,7 @@ MODEL_12 = Model(
         ["EB"],
         "campground"
     ),
-    "You have acquired Covid-19 disease on January 9, 2020 at Location 6 from a social interaction with EB in the camp bonfire.")
+    "You have contracted Covid-19 disease on January 9, 2020 at Location 6 from a social interaction with EB in the camp bonfire.")
 
 MODEL_13 = Model(
     Knowledge(
@@ -121,7 +121,7 @@ MODEL_13 = Model(
         ["CB","EB"],
         "campground"
     ),
-    "You have acquired Covid-19 disease on January 9, 2020 at Location 6 from a social interaction with CB or EB in the camp bonfire.")
+    "You have contracted Covid-19 disease on January 9, 2020 at Location 6 from a social interaction with CB or EB in the camp bonfire.")
 
 MODEL_14 = Model(
     Knowledge(
@@ -129,7 +129,7 @@ MODEL_14 = Model(
         ["AB"],
         "house"
     ),
-    "You have acquired Covid-19 disease at Location 2 through a close contact with AB during Couple 1's home visit on January 9, 2020.")
+    "You have contracted Covid-19 disease at Location 2 through a close contact with AB during Couple 1's home visit on January 9, 2020.")
 
 MODEL_15 = Model(
     Knowledge(
@@ -137,7 +137,7 @@ MODEL_15 = Model(
         ["BB"],
         "house"
     ),
-    "You have acquired Covid-19 disease at Location 2 through a close contact with BB during Couple 1's home visit on January 9, 2020.")
+    "You have contracted Covid-19 disease at Location 2 through a close contact with BB during Couple 1's home visit on January 9, 2020.")
 
 MODEL_16 = Model(
     Knowledge(
@@ -145,7 +145,7 @@ MODEL_16 = Model(
         ["AB","BB"],
         "house"
     ),
-    "You have acquired Covid-19 disease at Location 2 through a close contact with AB or BB during Couple 1's home visit on January 9, 2020.")
+    "You have contracted Covid-19 disease at Location 2 through a close contact with AB or BB during Couple 1's home visit on January 9, 2020.")
 
 MODEL_17 = Model(
     Knowledge(
@@ -153,7 +153,7 @@ MODEL_17 = Model(
         ["AB"],
         "house"
     ),
-    "You have acquired Covid-19 disease at Location 3 through a close contact with AB during Couple 1's home visit on January 9, 2020.")
+    "You have contracted Covid-19 disease at Location 3 through a close contact with AB during Couple 1's home visit on January 9, 2020.")
 
 MODEL_18 = Model(
     Knowledge(
@@ -161,7 +161,7 @@ MODEL_18 = Model(
         ["BB"],
         "house"
     ),
-    "You have acquired Covid-19 disease at Location 3 through a close contact with BB during Couple 1's home visit on January 9, 2020.")
+    "You have contracted Covid-19 disease at Location 3 through a close contact with BB during Couple 1's home visit on January 9, 2020.")
 
 MODEL_19 = Model(
     Knowledge(
@@ -169,7 +169,7 @@ MODEL_19 = Model(
         ["AB","BB"],
         "house"
     ),
-    "You have acquired Covid-19 disease at Location 3 through a close contact with AB or BB during Couple 1's home visit on January 9, 2020.")
+    "You have contracted Covid-19 disease at Location 3 through a close contact with AB or BB during Couple 1's home visit on January 9, 2020.")
 
 MODEL_20 = Model(
     Knowledge(
@@ -177,7 +177,7 @@ MODEL_20 = Model(
         ["CB"],
         "restaurant"
     ),
-    "You have acquired Covid-19 disease at Location 4 through a close contact with CB from the afternoon snack on January 9, 2020.")
+    "You have contracted Covid-19 disease through a close contact with CB from the afternoon snack at Location 4 on January 9, 2020.")
 
 MODEL_21 = Model(
     Knowledge(
@@ -185,7 +185,7 @@ MODEL_21 = Model(
         ["EB"],
         "restaurant"
     ),
-    "You have acquired Covid-19 disease at Location 4 through a close contact with EB from the afternoon snack on January 9, 2020.")
+    "You have contracted Covid-19 disease through a close contact with EB from the afternoon snack at Location 4 on January 9, 2020.")
 
 MODEL_22 = Model(
     Knowledge(
@@ -193,7 +193,7 @@ MODEL_22 = Model(
         ["CB","EB"],
         "restaurant"
     ),
-    "You have acquired Covid-19 disease at Location 4 through a close contact with CB or EB from the afternoon snack on January 9, 2020.")
+    "You have contracted Covid-19 disease through a close contact with CB or EB from the afternoon snack at Location 4 on January 9, 2020.")
 
 MODELS = [
     MODEL_1, MODEL_2, MODEL_3, MODEL_4, MODEL_5,
