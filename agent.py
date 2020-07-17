@@ -517,16 +517,27 @@ class Agent():
         elif type == TYPE_COMPROMISED_LOCATION:
             visits = information
             compromised_visits = []
+            i = 0
 
-            for v in visits:
-                for q in QUARANTINES: # keep order based on timeline
-                    if v.match(q) and v not in compromised_visits:
+            for q in QUARANTINES: # keep order based on timeline
+                for v in visits:
+                    # if any(q.match(v) for v in visits) and v not in compromised_visits: # alternative | random input allowance
+                    if q.match(v) and (v not in compromised_visits):
                         compromised_visits.append(v)
 
             return compromised_visits
 
     def learn(self, information=[]):
         f = open("knowledge.txt", "a")
-        f.write(str(information))
+        text = ""
+
+        for i in information:
+            if isinstance(i,Location):
+                text = text + i.text() + SPACE
+            else:
+                text = text + str(i) + SPACE
+
+        f.write("\n"+text)
         f.close()
+        self.reply(M037)
 
