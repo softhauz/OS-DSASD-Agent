@@ -211,7 +211,7 @@ class Agent():
             for place in v.quarantines:
 
                 # LOCATION 1 - OFFICE
-                if place in QUARANTINES[0].quarantines and v.id == 1 and place == "office":
+                if v.id == 1 and place.find("office") > -1:
                     answer = self.interrogate(M018)
 
                     if answer not in AFFIRMATIONS:
@@ -246,7 +246,7 @@ class Agent():
                             break  # source is found
 
                 # LOCATION 1 - GYM
-                elif place in QUARANTINES[0].quarantines and v.id == 1 and place == "gym":
+                elif v.id == 1 and place.find("gym") > -1:
                     answer = self.interrogate(M022)
 
                     if answer not in AFFIRMATIONS:
@@ -259,7 +259,7 @@ class Agent():
                         break # source is found
 
                 # LOCATION 1 - GROCERY STORE
-                elif place in QUARANTINES[0].quarantines and v.id == 1 and (place.find("grocery") > -1 or place.find("store") > -1):
+                elif v.id == 1 and (place.find("grocery") > -1 or place.find("store") > -1):
                     answer = self.interrogate(M023)
 
                     if answer not in AFFIRMATIONS:
@@ -272,7 +272,7 @@ class Agent():
                         break # source is found
 
                 # LOCATION 1 - HOUSE
-                elif place in QUARANTINES[0].quarantines and v.id == 1 and (place.find("house") > -1 or place.find("home") > -1):
+                elif v.id == 1 and (place.find("house") > -1 or place.find("home") > -1):
                     answer = self.interrogate(M024)
 
                     if answer not in AFFIRMATIONS:
@@ -312,7 +312,7 @@ class Agent():
                                 break  # source is found
 
                 # LOCATION 2 - HOUSE
-                elif place in QUARANTINES[1].quarantines and v.id == 2 and (place.find("house") > -1 or place.find("home") > -1):
+                elif v.id == 2 and (place.find("house") > -1 or place.find("home") > -1):
                     answer = self.interrogate(M029)
 
                     if answer not in AFFIRMATIONS:
@@ -352,7 +352,7 @@ class Agent():
                                 break  # source is found
 
                 # LOCATION 3 - HOUSE
-                elif place in QUARANTINES[2].quarantines and v.id == 3 and (place.find("house") > -1 or place.find("home") > -1):
+                elif v.id == 3 and (place.find("house") > -1 or place.find("home") > -1):
                     answer = self.interrogate(M029)
 
                     if answer not in AFFIRMATIONS:
@@ -392,7 +392,7 @@ class Agent():
                                 break  # source is found
 
                 # LOCATION 4 - RESTAURANT
-                elif place in QUARANTINES[3].quarantines and v.id == 4 and (place.find("restaurant") > -1 or place.find("dine-in") > -1):
+                elif v.id == 4 and (place.find("restaurant") > -1 or place.find("dine-in") > -1):
                     answer = self.interrogate(M032)
 
                     if answer not in AFFIRMATIONS:
@@ -432,7 +432,7 @@ class Agent():
                                 break  # source is found
 
                 # LOCATION 6 - CAMPGROUND
-                elif place in QUARANTINES[5].quarantines and v.id == 6 and (place.find("campground") > -1 or place.find("camp") > -1):
+                elif v.id == 6 and (place.find("campground") > -1 or place.find("camp") > -1):
                     answer = self.interrogate(M035)
 
                     if answer not in AFFIRMATIONS:
@@ -514,9 +514,9 @@ class Agent():
             compromised_visits = []
 
             for v in visits:
-                for q in QUARANTINES:
-                    if v.match(q) and (v not in compromised_visits):
-                        compromised_visits.append(v)
+
+                if any(v.match(q) for q in QUARANTINES) and v not in compromised_visits:
+                    compromised_visits.append(v)
 
             return compromised_visits
 
