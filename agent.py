@@ -473,7 +473,7 @@ class Agent():
 
             if found:
                 break
-                
+
         if not found:
             contacts = self.interrogate(M015)
             information = [v, contacts, v.quarantines]

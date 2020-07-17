@@ -35,7 +35,7 @@ class Model:
     def match(self, model=None):
         if (self.location.match(model.knowledge.location)) and \
             (any(self.knowledge.contacts == c for c in model.knowledge.contacts)) and \
-            (self.knowledge.visit == model.knowledge.visit):
+            (self.knowledge.area == model.knowledge.area):
             return True
 
         return False
@@ -44,7 +44,7 @@ class Model:
 
         for m in models:
             if self.knowledge.location.id == m.knowledge.location.id and \
-                    self.knowledge.visit == m.knowledge.visit:
+                    self.knowledge.area == m.knowledge.area:
 
                 for c in m.knowledge.contacts:
                     if c not in self.knowledge.contacts:
