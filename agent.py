@@ -203,9 +203,9 @@ class Agent():
 
     def connect(self):
         self.reply(M017)
+        found = False
 
         for v in self.individual.visits:
-            found = False
 
             # Probe for every visited area in current location (v)
             for place in v.quarantines:
@@ -473,10 +473,11 @@ class Agent():
 
             if found:
                 break
-            else:
-                contacts = self.interrogate(M015)
-                information = [v, contacts, v.quarantines]
-                self.learn(information)
+                
+        if not found:
+            contacts = self.interrogate(M015)
+            information = [v, contacts, v.quarantines]
+            self.learn(information)
 
     def collect(self, type=0, information=[]):
         if type == TYPE_LOCATION:

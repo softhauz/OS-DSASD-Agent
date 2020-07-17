@@ -1,0 +1,1 @@
+[<location.Location object at 0x01502220>, 'BA', ['camp']]
