@@ -47,8 +47,8 @@ M013 = "I've noticed that you have not indicated a location for the most recent 
 M014 = "All right. As per your request, I will ignore the most recent places mentioned.\n" \
 
 M015 = "Hmmm. I couldn't seem to find a model for your input. As I've said, \n" \
-       "I'm continuously learning. Can you tell me who are the people that you have socially interacted with\n" \
-       "at this location so I can create a new model?\n"
+       "I'm continuously learning. Do you mind telling me the names of the people that you have socially interacted with\n" \
+       "at this location so I can add it to my knowledge base?\n"
 
 M016 = "Since you did not have any social interaction on January 9, 2020 within the compromised areas\n" \
        "that you have mentioned, you do not seem to have contracted the Covid-19 disease on that day.\n"
@@ -98,3 +98,5 @@ M035 = "Were you part of the camp bonfire held at Location 6 on January 9, 2020?
 
 M036 = "Did your first social interaction occur with an individual from Couple 2's six friends\n" \
        "or anyone who came in close contact with an individual from Couple 2's six friends?\n"
+
+M037 = "Thank you! Your input had been added to my knowledge base.\n"

@@ -473,11 +473,12 @@ class Agent():
 
             if found:
                 break
-            # else:
-                # learn
+            else:
+                contacts = self.interrogate(M015)
+                information = [v, contacts, v.quarantines]
+                self.learn(information)
 
     def collect(self, type=0, information=[]):
-
         if type == TYPE_LOCATION:
 
             places = information.split()
@@ -508,7 +509,6 @@ class Agent():
             return visited
 
         elif type == TYPE_COMPROMISED_LOCATION:
-
             visits = information
             compromised_visits = []
 
@@ -519,6 +519,8 @@ class Agent():
 
             return compromised_visits
 
-    def learn(self):
-        return None
+    def learn(self, information=[]):
+        f = open("knowledge.txt", "a")
+        f.write(str(information))
+        f.close()
 
