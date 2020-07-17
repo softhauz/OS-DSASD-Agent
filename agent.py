@@ -212,6 +212,11 @@ class Agent():
 
                 # LOCATION 1 - OFFICE
                 if v.id == 1 and place.find("office") > -1:
+                    answer = self.interrogate(M038)
+
+                    if answer not in AFFIRMATIONS:
+                        continue # source did not come from this place
+
                     answer = self.interrogate(M018)
 
                     if answer not in AFFIRMATIONS:
@@ -514,9 +519,9 @@ class Agent():
             compromised_visits = []
 
             for v in visits:
-
-                if any(v.match(q) for q in QUARANTINES) and v not in compromised_visits:
-                    compromised_visits.append(v)
+                for q in QUARANTINES: # keep order based on timeline
+                    if v.match(q) and v not in compromised_visits:
+                        compromised_visits.append(v)
 
             return compromised_visits
 

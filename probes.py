@@ -100,3 +100,5 @@ M036 = "Did your first social interaction occur with an individual from Couple 2
        "or anyone who came in close contact with an individual from Couple 2's six friends?\n"
 
 M037 = "Thank you! Your input had been added to my knowledge base.\n"
+
+M038 = "Have you participated in the office meeting held at Location 1 on January 9, 2020 hosted by AA, BA, and CA?\n"
