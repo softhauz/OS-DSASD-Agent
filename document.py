@@ -71,7 +71,7 @@ if not found:
 TYPE 3: Writing to data file via append.
 """
 f = open("knowledge.txt", "a")
-text = "QUARANTINES[0] ['AA','BA','CA'] office"
+text = "\nQUARANTINES[0] ['AA','BA','CA'] office"
 f.write(text)
 f.close()
 

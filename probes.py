@@ -54,7 +54,8 @@ M016 = "Since you did not have any social interaction on January 9, 2020 within 
 M017 = "In order to verify the accuracy of my data connections, I have to confirm a few things\n" \
        "with you."
 
-M018 = "Do you remember the chronological order of your social interactions?\n"
+M018 = "I will now probe about your visit on the next location. \n" \
+       "Do you remember the chronological order of your social interactions?\n"
 
 M019 = "Did your first social interaction occur with AA?\n"
 M020 = "Did your first social interaction occur with BA?\n"
