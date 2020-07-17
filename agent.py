@@ -275,7 +275,7 @@ class Agent():
                         break # source is found
 
                 # LOCATION 1 - HOUSE
-                elif place in QUARANTINES[0].quarantines and v.id == 1 and (place.find("grocery") > -1 or place.find("store") > -1):
+                elif place in QUARANTINES[0].quarantines and v.id == 1 and (place.find("house") > -1 or place.find("home") > -1):
                     answer = self.interrogate(M024)
 
                     if answer not in AFFIRMATIONS:
