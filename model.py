@@ -17,8 +17,12 @@ class Model:
 
         for m in models:
             if self.knowledge.location.id == m.knowledge.location.id and \
-                    self.knowledge.visit == m.knowledge.visit and \
-                    self.knowledge.contacts == m.knowledge.contacts:
+                    self.knowledge.visit == m.knowledge.visit:
+
+                for c in m.knowledge.contacts:
+                    if c not in self.knowledge.contacts:
+                        continue
+
                 self.message = m.message
                 break
             else:

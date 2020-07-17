@@ -97,7 +97,7 @@ MODEL_10 = Model(
         ["six friends"],
         "campground"
     ),
-    "You have contracted Covid-19 disease on January 9, 2020 at Location 6 from a social interaction with one or more of Couple 2's six friends in the camp bonfire.")
+    "You have contracted Covid-19 disease on January 9, 2020 at Location 6 from a social interaction among Couple 2's six friends in the camp bonfire.")
 
 MODEL_11 = Model(
     Knowledge(
@@ -105,7 +105,8 @@ MODEL_11 = Model(
         ["CB"],
         "campground"
     ),
-    "You have contracted Covid-19 disease on January 9, 2020 at Location 6 from a social interaction with one or more of Couple 2's six friends in the camp bonfire.")
+    "You have contracted Covid-19 disease on January 9, 2020 at Location 6 from a social interaction with CB \n" \
+    "or someone who came in close contact with CB in the camp bonfire.")
 
 MODEL_12 = Model(
     Knowledge(
@@ -113,15 +114,16 @@ MODEL_12 = Model(
         ["EB"],
         "campground"
     ),
-    "You have contracted Covid-19 disease on January 9, 2020 at Location 6 from a social interaction with EB in the camp bonfire.")
+    "You have contracted Covid-19 disease on January 9, 2020 at Location 6 from a social interaction with EB \n" \
+    "or someone who came in close contact with EB in the camp bonfire.")
 
 MODEL_13 = Model(
     Knowledge(
         QUARANTINES[5],
-        ["CB","EB"],
+        ["CB", "EB", "six friends"],
         "campground"
     ),
-    "You have contracted Covid-19 disease on January 9, 2020 at Location 6 from a social interaction with CB or EB in the camp bonfire.")
+    "You have contracted Covid-19 disease on January 9, 2020 at Location 6 from a social interaction among Couple 2's social circle in the camp bonfire.")
 
 MODEL_14 = Model(
     Knowledge(

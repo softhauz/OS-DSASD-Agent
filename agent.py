@@ -431,6 +431,46 @@ class Agent():
                                 found = True
                                 break  # source is found
 
+                # LOCATION 6 - CAMPGROUND
+                elif place in QUARANTINES[5].quarantines and v.id == 6 and (place.find("campground") > -1 or place.find("camp") > -1):
+                    answer = self.interrogate(M035)
+
+                    if answer not in AFFIRMATIONS:
+                        continue  # source did not come from this place
+                    else:
+                        answer = self.interrogate(M018)
+
+                        if answer not in AFFIRMATIONS:
+                            self.individual.source = "Couple 2's Social Circle"
+                            self.individual.model.knowledge = Knowledge(QUARANTINES[5], ["CB", "EB", "six friends"], "campground")
+                            self.individual.model.check(MODELS)
+                            found = True
+                            break  # source is found
+                        else:
+                            answer = DENY
+                            prober = [M033, M034, M036]
+                            possibilities = ["CB", "EB", "six friends"]
+                            i = 0
+
+                            while answer not in AFFIRMATIONS and (i < len(prober)):
+                                answer = self.interrogate(prober[i])
+                                i = i + 1
+
+                            i = i - 1
+
+                            if answer not in AFFIRMATIONS:
+                                self.individual.source = "Couple 2's Social Circle"
+                                self.individual.model.knowledge = Knowledge(QUARANTINES[5], ["CB", "EB", "six friends"], "campground")
+                                self.individual.model.check(MODELS)
+                                found = True
+                                break  # source is found
+                            else:
+                                self.individual.source = possibilities[i]
+                                self.individual.model.knowledge = Knowledge(QUARANTINES[5], [possibilities[i]], "campground")
+                                self.individual.model.check(MODELS)
+                                found = True
+                                break  # source is found
+
             if found:
                 break
             # else:

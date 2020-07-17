@@ -87,10 +87,14 @@ M030 = "Did your first social interaction occur with AB or anyone who came in cl
 
 M031 = "Did your first social interaction occur with BB or anyone who came in close contact with BB?\n"
 
-M032 = "Have you been to the restaurant at Location 4 where Couple 2's group had their afternoon snack?\n" \
+M032 = "Have you been to the restaurant at Location 4 where Couple 2's group had their afternoon snack\n" \
        "on January 9, 2020?"
-
 
 M033 = "Did your first social interaction occur with CB or anyone who came in close contact with CB?\n"
 
 M034 = "Did your first social interaction occur with EB or anyone who came in close contact with EB?\n"
+
+M035 = "Were you part of the camp bonfire held at Location 6 on January 9, 2020?\n"
+
+M036 = "Did your first social interaction occur with an individual from Couple 2's six friends\n" \
+       "or anyone who came in close contact with an individual from Couple 2's six friends?\n"
