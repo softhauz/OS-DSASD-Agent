@@ -66,16 +66,3 @@ for v in visited:
 
 if not found:
     print("Sorry, there is no match found.")
-
-"""
-TYPE 3: Writing to data file via append.
-"""
-f = open("knowledge.txt", "a")
-text = "\nQUARANTINES[0] ['AA','BA','CA'] office"
-f.write(text)
-f.close()
-
-#open and read the file after the appending:
-f = open("knowledge.txt", "r")
-print(f.read())
-

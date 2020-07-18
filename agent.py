@@ -47,6 +47,7 @@ class Agent():
         self.individual = Individual()
 
     def find(self, type=TYPE_LOCATION, input=""):
+
         prober = []
 
         if type == TYPE_LOCATION:
