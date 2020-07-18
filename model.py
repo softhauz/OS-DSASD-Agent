@@ -1,3 +1,7 @@
+from data import *
+from probes import *
+from knowledge import *
+
 """
 
 Simultaneous Tracker: "Historian"
@@ -56,3 +60,285 @@ class Model:
                 continue
 
         print(self.message)
+
+    def compute(self,agent=None):
+        found = False
+
+        for v in agent.individual.visits:
+
+            # Probe for every visited area in current location (v)
+            for place in v.quarantines:
+
+                # LOCATION 1 - OFFICE
+                if v.id == 1 and place.find("office") > -1:
+                    answer = agent.interrogate(M038)
+
+                    if answer not in AFFIRMATIONS:
+                        continue # source did not come from this place
+
+                    answer = agent.interrogate(M018)
+
+                    if answer not in AFFIRMATIONS:
+                        agent.individual.source = "AA, BA, or CA"
+                        agent.individual.model.knowledge = Knowledge(QUARANTINES[0],["AA","BA","CA"],"office")
+                        agent.individual.model.check(MODELS)
+                        found = True
+                        break # source is found
+                    else:
+                        answer = DENY
+                        prober = [M019, M020, M021]
+                        possibilities = ["AA", "BA", "CA"]
+                        i = 0
+
+                        while answer not in AFFIRMATIONS and (i < len(prober)):
+                            answer = agent.interrogate(prober[i])
+                            i = i + 1
+
+                        i = i - 1
+
+                        if answer not in AFFIRMATIONS:
+                            agent.individual.source = "AA, BA, or CA"
+                            agent.individual.model.knowledge = Knowledge(QUARANTINES[0], ["AA", "BA", "CA"], "office")
+                            agent.individual.model.check(MODELS)
+                            found = True
+                            break  # source is found
+                        else:
+                            agent.individual.source = possibilities[i]
+                            agent.individual.model.knowledge = Knowledge(QUARANTINES[0], [possibilities[i]], "office")
+                            agent.individual.model.check(MODELS)
+                            found = True
+                            break  # source is found
+
+                # LOCATION 1 - GYM
+                elif v.id == 1 and place.find("gym") > -1:
+                    answer = agent.interrogate(M022)
+
+                    if answer not in AFFIRMATIONS:
+                        continue
+                    else:
+                        agent.individual.source = "DA"
+                        agent.individual.model.knowledge = Knowledge(QUARANTINES[0],["DA"],"gym")
+                        agent.individual.model.check(MODELS)
+                        found = True
+                        break # source is found
+
+                # LOCATION 1 - GROCERY STORE
+                elif v.id == 1 and (place.find("grocery") > -1 or place.find("store") > -1):
+                    answer = agent.interrogate(M023)
+
+                    if answer not in AFFIRMATIONS:
+                        continue # source did not come from this place
+                    else:
+                        agent.individual.source = "EA"
+                        agent.individual.model.knowledge = Knowledge(QUARANTINES[0],["EA"],"grocery store")
+                        agent.individual.model.check(MODELS)
+                        found = True
+                        break # source is found
+
+                # LOCATION 1 - HOUSE
+                elif v.id == 1 and (place.find("house") > -1 or place.find("home") > -1):
+                    answer = agent.interrogate(M024)
+
+                    if answer not in AFFIRMATIONS:
+                        continue # source did not come from this place
+                    else:
+                        answer = agent.interrogate(M018)
+
+                        if answer not in AFFIRMATIONS:
+                            agent.individual.source = "BA or CA"
+                            agent.individual.model.knowledge = Knowledge(QUARANTINES[0],["BA","CA"],"house")
+                            agent.individual.model.check(MODELS)
+                            found = True
+                            break # source is found
+                        else:
+                            answer = DENY
+                            prober = [M026, M027, M028]
+                            possibilities = ["BA", "CA", "BA or CA"]
+                            i = 0
+
+                            while answer not in AFFIRMATIONS and (i < len(prober)):
+                                answer = agent.interrogate(prober[i])
+                                i = i + 1
+
+                            i = i - 1
+
+                            if answer not in AFFIRMATIONS:
+                                agent.individual.source = "BA or CA"
+                                agent.individual.model.knowledge = Knowledge(QUARANTINES[0], ["BA", "CA"], "house")
+                                agent.individual.model.check(MODELS)
+                                found = True
+                                break  # source is found
+                            else:
+                                agent.individual.source = possibilities[i]
+                                agent.individual.model.knowledge = Knowledge(QUARANTINES[0], [possibilities[i]], "house")
+                                agent.individual.model.check(MODELS)
+                                found = True
+                                break  # source is found
+
+                # LOCATION 2 - HOUSE
+                elif v.id == 2 and (place.find("house") > -1 or place.find("home") > -1):
+                    answer = agent.interrogate(M029)
+
+                    if answer not in AFFIRMATIONS:
+                        continue  # source did not come from this place
+                    else:
+                        answer = agent.interrogate(M018)
+
+                        if answer not in AFFIRMATIONS:
+                            agent.individual.source = "AB or BB"
+                            agent.individual.model.knowledge = Knowledge(QUARANTINES[1],["AB","BB"],"house")
+                            agent.individual.model.check(MODELS)
+                            found = True
+                            break # source is found
+                        else:
+                            answer = DENY
+                            prober = [M030, M031]
+                            possibilities = ["AB", "BB"]
+                            i = 0
+
+                            while answer not in AFFIRMATIONS and (i < len(prober)):
+                                answer = agent.interrogate(prober[i])
+                                i = i + 1
+
+                            i = i - 1
+
+                            if answer not in AFFIRMATIONS:
+                                agent.individual.source = "AB or BB"
+                                agent.individual.model.knowledge = Knowledge(QUARANTINES[1], ["AB", "BB"], "house")
+                                agent.individual.model.check(MODELS)
+                                found = True
+                                break  # source is found
+                            else:
+                                agent.individual.source = possibilities[i]
+                                agent.individual.model.knowledge = Knowledge(QUARANTINES[1], [possibilities[i]], "house")
+                                agent.individual.model.check(MODELS)
+                                found = True
+                                break  # source is found
+
+                # LOCATION 3 - HOUSE
+                elif v.id == 3 and (place.find("house") > -1 or place.find("home") > -1):
+                    answer = agent.interrogate(M029)
+
+                    if answer not in AFFIRMATIONS:
+                        continue  # source did not come from this place
+                    else:
+                        answer = agent.interrogate(M018)
+
+                        if answer not in AFFIRMATIONS:
+                            agent.individual.source = "AB or BB"
+                            agent.individual.model.knowledge = Knowledge(QUARANTINES[2],["AB","BB"],"house")
+                            agent.individual.model.check(MODELS)
+                            found = True
+                            break # source is found
+                        else:
+                            answer = DENY
+                            prober = [M030, M031]
+                            possibilities = ["AB", "BB"]
+                            i = 0
+
+                            while answer not in AFFIRMATIONS and (i < len(prober)):
+                                answer = agent.interrogate(prober[i])
+                                i = i + 1
+
+                            i = i - 1
+
+                            if answer not in AFFIRMATIONS:
+                                agent.individual.source = "AB or BB"
+                                agent.individual.model.knowledge = Knowledge(QUARANTINES[2], ["AB", "BB"], "house")
+                                agent.individual.model.check(MODELS)
+                                found = True
+                                break  # source is found
+                            else:
+                                agent.individual.source = possibilities[i]
+                                agent.individual.model.knowledge = Knowledge(QUARANTINES[2], [possibilities[i]], "house")
+                                agent.individual.model.check(MODELS)
+                                found = True
+                                break  # source is found
+
+                # LOCATION 4 - RESTAURANT
+                elif v.id == 4 and (place.find("restaurant") > -1 or place.find("dine-in") > -1):
+                    answer = agent.interrogate(M032)
+
+                    if answer not in AFFIRMATIONS:
+                        continue  # source did not come from this place
+                    else:
+                        answer = agent.interrogate(M018)
+
+                        if answer not in AFFIRMATIONS:
+                            agent.individual.source = "CB or EB"
+                            agent.individual.model.knowledge = Knowledge(QUARANTINES[3], ["CB", "EB"], "restaurant")
+                            agent.individual.model.check(MODELS)
+                            found = True
+                            break  # source is found
+                        else:
+                            answer = DENY
+                            prober = [M033, M034]
+                            possibilities = ["CB", "EB"]
+                            i = 0
+
+                            while answer not in AFFIRMATIONS and (i < len(prober)):
+                                answer = agent.interrogate(prober[i])
+                                i = i + 1
+
+                            i = i - 1
+
+                            if answer not in AFFIRMATIONS:
+                                agent.individual.source = "CB or EB"
+                                agent.individual.model.knowledge = Knowledge(QUARANTINES[2], ["CB", "EB"], "restaurant")
+                                agent.individual.model.check(MODELS)
+                                found = True
+                                break  # source is found
+                            else:
+                                agent.individual.source = possibilities[i]
+                                agent.individual.model.knowledge = Knowledge(QUARANTINES[2], [possibilities[i]], "restaurant")
+                                agent.individual.model.check(MODELS)
+                                found = True
+                                break  # source is found
+
+                # LOCATION 6 - CAMPGROUND
+                elif v.id == 6 and (place.find("campground") > -1 or place.find("camp") > -1):
+                    answer = agent.interrogate(M035)
+
+                    if answer not in AFFIRMATIONS:
+                        continue  # source did not come from this place
+                    else:
+                        answer = agent.interrogate(M018)
+
+                        if answer not in AFFIRMATIONS:
+                            agent.individual.source = "Couple 2's Social Circle"
+                            agent.individual.model.knowledge = Knowledge(QUARANTINES[5], ["CB", "EB", "six friends"], "campground")
+                            agent.individual.model.check(MODELS)
+                            found = True
+                            break  # source is found
+                        else:
+                            answer = DENY
+                            prober = [M033, M034, M036]
+                            possibilities = ["CB", "EB", "six friends"]
+                            i = 0
+
+                            while answer not in AFFIRMATIONS and (i < len(prober)):
+                                answer = agent.interrogate(prober[i])
+                                i = i + 1
+
+                            i = i - 1
+
+                            if answer not in AFFIRMATIONS:
+                                agent.individual.source = "Couple 2's Social Circle"
+                                agent.individual.model.knowledge = Knowledge(QUARANTINES[5], ["CB", "EB", "six friends"], "campground")
+                                agent.individual.model.check(MODELS)
+                                found = True
+                                break  # source is found
+                            else:
+                                agent.individual.source = possibilities[i]
+                                agent.individual.model.knowledge = Knowledge(QUARANTINES[5], [possibilities[i]], "campground")
+                                agent.individual.model.check(MODELS)
+                                found = True
+                                break  # source is found
+
+            if found:
+                break
+
+        if not found:
+            contacts = agent.interrogate(M015)
+            information = [v, contacts, v.quarantines]
+            agent.learn(information)

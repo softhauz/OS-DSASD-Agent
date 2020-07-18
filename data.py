@@ -1,6 +1,6 @@
-from location import *
 from model import *
-from knowledge import *
+from location import *
+
 """
 
 Simultaneous Tracker: "Historian"
@@ -28,6 +28,9 @@ from whom the viral infection possibly came from, and which location category
 the virus had been spread from.  
 
 """
+SPACE = " "
+DENY = "No"
+
 POSSIBLE_SOURCES_AT_LOC_1 = ["AA", "BA", "CA", "DA", "EA", "FA", "GA"]
 POSSIBLE_SOURCES_AT_LOC_2 = ["AB", "BB"]
 POSSIBLE_SOURCES_AT_LOC_3 = ["AB", "BB"]

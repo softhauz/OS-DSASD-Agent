@@ -1,6 +1,8 @@
-from probes import *
 from individual import *
 from data import *
+from model import *
+from location import *
+
 
 """
 Simultaneous Tracker: "Historian"
@@ -21,7 +23,8 @@ disease from Location 1 to Location 6 in a span of 12-hour period on
 9th of January 2019, based on fictional raw data provided.
 
 The agent must have an ability to learn, create new models,
-and find the source of infection based on built-up knowledge base.
+compute for data relations, and find the source of infection 
+based on built-up knowledge base.
 
 Upon acquiring sufficient knowledge, the agent must be able to find
 the following: where the exact source of infection took place,
@@ -36,8 +39,6 @@ TYPE_RESPONSE_LOCATION = 6
 TYPE_COMPROMISED_LOCATION = 7
 ERR_LOCATION_NOT_INDICATED = 4
 ERR_NOT_COMPROMISED = 5
-SPACE = " "
-DENY = "No"
 
 class Agent():
 
@@ -198,291 +199,12 @@ class Agent():
             for c in self.individual.visits:
                 c.print()
 
-        self.individual.model = Model()
         self.connect()
 
     def connect(self):
         self.reply(M017)
-        found = False
-
-        for v in self.individual.visits:
-
-            # Probe for every visited area in current location (v)
-            for place in v.quarantines:
-
-                # LOCATION 1 - OFFICE
-                if v.id == 1 and place.find("office") > -1:
-                    answer = self.interrogate(M038)
-
-                    if answer not in AFFIRMATIONS:
-                        continue # source did not come from this place
-
-                    answer = self.interrogate(M018)
-
-                    if answer not in AFFIRMATIONS:
-                        self.individual.source = "AA, BA, or CA"
-                        self.individual.model.knowledge = Knowledge(QUARANTINES[0],["AA","BA","CA"],"office")
-                        self.individual.model.check(MODELS)
-                        found = True
-                        break # source is found
-                    else:
-                        answer = DENY
-                        prober = [M019, M020, M021]
-                        possibilities = ["AA", "BA", "CA"]
-                        i = 0
-
-                        while answer not in AFFIRMATIONS and (i < len(prober)):
-                            answer = self.interrogate(prober[i])
-                            i = i + 1
-
-                        i = i - 1
-
-                        if answer not in AFFIRMATIONS:
-                            self.individual.source = "AA, BA, or CA"
-                            self.individual.model.knowledge = Knowledge(QUARANTINES[0], ["AA", "BA", "CA"], "office")
-                            self.individual.model.check(MODELS)
-                            found = True
-                            break  # source is found
-                        else:
-                            self.individual.source = possibilities[i]
-                            self.individual.model.knowledge = Knowledge(QUARANTINES[0], [possibilities[i]], "office")
-                            self.individual.model.check(MODELS)
-                            found = True
-                            break  # source is found
-
-                # LOCATION 1 - GYM
-                elif v.id == 1 and place.find("gym") > -1:
-                    answer = self.interrogate(M022)
-
-                    if answer not in AFFIRMATIONS:
-                        continue
-                    else:
-                        self.individual.source = "DA"
-                        self.individual.model.knowledge = Knowledge(QUARANTINES[0],["DA"],"gym")
-                        self.individual.model.check(MODELS)
-                        found = True
-                        break # source is found
-
-                # LOCATION 1 - GROCERY STORE
-                elif v.id == 1 and (place.find("grocery") > -1 or place.find("store") > -1):
-                    answer = self.interrogate(M023)
-
-                    if answer not in AFFIRMATIONS:
-                        continue # source did not come from this place
-                    else:
-                        self.individual.source = "EA"
-                        self.individual.model.knowledge = Knowledge(QUARANTINES[0],["EA"],"grocery store")
-                        self.individual.model.check(MODELS)
-                        found = True
-                        break # source is found
-
-                # LOCATION 1 - HOUSE
-                elif v.id == 1 and (place.find("house") > -1 or place.find("home") > -1):
-                    answer = self.interrogate(M024)
-
-                    if answer not in AFFIRMATIONS:
-                        continue # source did not come from this place
-                    else:
-                        answer = self.interrogate(M018)
-
-                        if answer not in AFFIRMATIONS:
-                            self.individual.source = "BA or CA"
-                            self.individual.model.knowledge = Knowledge(QUARANTINES[0],["BA","CA"],"house")
-                            self.individual.model.check(MODELS)
-                            found = True
-                            break # source is found
-                        else:
-                            answer = DENY
-                            prober = [M026, M027, M028]
-                            possibilities = ["BA", "CA", "BA or CA"]
-                            i = 0
-
-                            while answer not in AFFIRMATIONS and (i < len(prober)):
-                                answer = self.interrogate(prober[i])
-                                i = i + 1
-
-                            i = i - 1
-
-                            if answer not in AFFIRMATIONS:
-                                self.individual.source = "BA or CA"
-                                self.individual.model.knowledge = Knowledge(QUARANTINES[0], ["BA", "CA"], "house")
-                                self.individual.model.check(MODELS)
-                                found = True
-                                break  # source is found
-                            else:
-                                self.individual.source = possibilities[i]
-                                self.individual.model.knowledge = Knowledge(QUARANTINES[0], [possibilities[i]], "house")
-                                self.individual.model.check(MODELS)
-                                found = True
-                                break  # source is found
-
-                # LOCATION 2 - HOUSE
-                elif v.id == 2 and (place.find("house") > -1 or place.find("home") > -1):
-                    answer = self.interrogate(M029)
-
-                    if answer not in AFFIRMATIONS:
-                        continue  # source did not come from this place
-                    else:
-                        answer = self.interrogate(M018)
-
-                        if answer not in AFFIRMATIONS:
-                            self.individual.source = "AB or BB"
-                            self.individual.model.knowledge = Knowledge(QUARANTINES[1],["AB","BB"],"house")
-                            self.individual.model.check(MODELS)
-                            found = True
-                            break # source is found
-                        else:
-                            answer = DENY
-                            prober = [M030, M031]
-                            possibilities = ["AB", "BB"]
-                            i = 0
-
-                            while answer not in AFFIRMATIONS and (i < len(prober)):
-                                answer = self.interrogate(prober[i])
-                                i = i + 1
-
-                            i = i - 1
-
-                            if answer not in AFFIRMATIONS:
-                                self.individual.source = "AB or BB"
-                                self.individual.model.knowledge = Knowledge(QUARANTINES[1], ["AB", "BB"], "house")
-                                self.individual.model.check(MODELS)
-                                found = True
-                                break  # source is found
-                            else:
-                                self.individual.source = possibilities[i]
-                                self.individual.model.knowledge = Knowledge(QUARANTINES[1], [possibilities[i]], "house")
-                                self.individual.model.check(MODELS)
-                                found = True
-                                break  # source is found
-
-                # LOCATION 3 - HOUSE
-                elif v.id == 3 and (place.find("house") > -1 or place.find("home") > -1):
-                    answer = self.interrogate(M029)
-
-                    if answer not in AFFIRMATIONS:
-                        continue  # source did not come from this place
-                    else:
-                        answer = self.interrogate(M018)
-
-                        if answer not in AFFIRMATIONS:
-                            self.individual.source = "AB or BB"
-                            self.individual.model.knowledge = Knowledge(QUARANTINES[2],["AB","BB"],"house")
-                            self.individual.model.check(MODELS)
-                            found = True
-                            break # source is found
-                        else:
-                            answer = DENY
-                            prober = [M030, M031]
-                            possibilities = ["AB", "BB"]
-                            i = 0
-
-                            while answer not in AFFIRMATIONS and (i < len(prober)):
-                                answer = self.interrogate(prober[i])
-                                i = i + 1
-
-                            i = i - 1
-
-                            if answer not in AFFIRMATIONS:
-                                self.individual.source = "AB or BB"
-                                self.individual.model.knowledge = Knowledge(QUARANTINES[2], ["AB", "BB"], "house")
-                                self.individual.model.check(MODELS)
-                                found = True
-                                break  # source is found
-                            else:
-                                self.individual.source = possibilities[i]
-                                self.individual.model.knowledge = Knowledge(QUARANTINES[2], [possibilities[i]], "house")
-                                self.individual.model.check(MODELS)
-                                found = True
-                                break  # source is found
-
-                # LOCATION 4 - RESTAURANT
-                elif v.id == 4 and (place.find("restaurant") > -1 or place.find("dine-in") > -1):
-                    answer = self.interrogate(M032)
-
-                    if answer not in AFFIRMATIONS:
-                        continue  # source did not come from this place
-                    else:
-                        answer = self.interrogate(M018)
-
-                        if answer not in AFFIRMATIONS:
-                            self.individual.source = "CB or EB"
-                            self.individual.model.knowledge = Knowledge(QUARANTINES[3], ["CB", "EB"], "restaurant")
-                            self.individual.model.check(MODELS)
-                            found = True
-                            break  # source is found
-                        else:
-                            answer = DENY
-                            prober = [M033, M034]
-                            possibilities = ["CB", "EB"]
-                            i = 0
-
-                            while answer not in AFFIRMATIONS and (i < len(prober)):
-                                answer = self.interrogate(prober[i])
-                                i = i + 1
-
-                            i = i - 1
-
-                            if answer not in AFFIRMATIONS:
-                                self.individual.source = "CB or EB"
-                                self.individual.model.knowledge = Knowledge(QUARANTINES[2], ["CB", "EB"], "restaurant")
-                                self.individual.model.check(MODELS)
-                                found = True
-                                break  # source is found
-                            else:
-                                self.individual.source = possibilities[i]
-                                self.individual.model.knowledge = Knowledge(QUARANTINES[2], [possibilities[i]], "restaurant")
-                                self.individual.model.check(MODELS)
-                                found = True
-                                break  # source is found
-
-                # LOCATION 6 - CAMPGROUND
-                elif v.id == 6 and (place.find("campground") > -1 or place.find("camp") > -1):
-                    answer = self.interrogate(M035)
-
-                    if answer not in AFFIRMATIONS:
-                        continue  # source did not come from this place
-                    else:
-                        answer = self.interrogate(M018)
-
-                        if answer not in AFFIRMATIONS:
-                            self.individual.source = "Couple 2's Social Circle"
-                            self.individual.model.knowledge = Knowledge(QUARANTINES[5], ["CB", "EB", "six friends"], "campground")
-                            self.individual.model.check(MODELS)
-                            found = True
-                            break  # source is found
-                        else:
-                            answer = DENY
-                            prober = [M033, M034, M036]
-                            possibilities = ["CB", "EB", "six friends"]
-                            i = 0
-
-                            while answer not in AFFIRMATIONS and (i < len(prober)):
-                                answer = self.interrogate(prober[i])
-                                i = i + 1
-
-                            i = i - 1
-
-                            if answer not in AFFIRMATIONS:
-                                self.individual.source = "Couple 2's Social Circle"
-                                self.individual.model.knowledge = Knowledge(QUARANTINES[5], ["CB", "EB", "six friends"], "campground")
-                                self.individual.model.check(MODELS)
-                                found = True
-                                break  # source is found
-                            else:
-                                self.individual.source = possibilities[i]
-                                self.individual.model.knowledge = Knowledge(QUARANTINES[5], [possibilities[i]], "campground")
-                                self.individual.model.check(MODELS)
-                                found = True
-                                break  # source is found
-
-            if found:
-                break
-
-        if not found:
-            contacts = self.interrogate(M015)
-            information = [v, contacts, v.quarantines]
-            self.learn(information)
+        self.individual.model = Model()
+        self.individual.model.compute(self)
 
     def collect(self, type=0, information=[]):
         if type == TYPE_LOCATION:

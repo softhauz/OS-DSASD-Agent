@@ -1,3 +1,2 @@
 
-<location.Location object at 0x03601F10> None ['office'] 
-Location 1: ['office'] None ['office'] 
+Location 1: ['grocery'] None ['grocery'] 
