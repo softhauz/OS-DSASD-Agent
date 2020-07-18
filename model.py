@@ -1,6 +1,6 @@
 from data import *
-from probes import *
 from knowledge import *
+from probes import *
 
 """
 
@@ -44,7 +44,7 @@ class Model:
 
         return False
 
-    def check(self, models=[]):
+    def check(self,models=[]):
 
         for m in models:
             if self.knowledge.location.id == m.knowledge.location.id and \
@@ -61,7 +61,7 @@ class Model:
 
         print(self.message)
 
-    def compute(self,agent=None):
+    def compute(self,agent=None,QUARANTINES=[],MODELS=[]):
         found = False
 
         for v in agent.individual.visits:

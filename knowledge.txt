@@ -1,2 +1,3 @@
 
 Location 1: ['grocery'] None ['grocery'] 
+Location 2: ['gym'] None ['gym'] 

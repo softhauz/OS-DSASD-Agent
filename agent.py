@@ -1,7 +1,5 @@
 from individual import *
 from data import *
-from model import *
-from location import *
 
 
 """
@@ -119,7 +117,7 @@ class Agent():
         if type == TYPE_LOCATION:
             return validate_location(information)
 
-    def process(self, type=TYPE_LOCATION):
+    def process(self):
 
         # get locations
         def get_locations(agent=Agent(), data=""):
@@ -204,7 +202,7 @@ class Agent():
     def connect(self):
         self.reply(M017)
         self.individual.model = Model()
-        self.individual.model.compute(self)
+        self.individual.model.compute(self,QUARANTINES,MODELS)
 
     def collect(self, type=0, information=[]):
         if type == TYPE_LOCATION:
