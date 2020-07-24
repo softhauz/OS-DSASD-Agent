@@ -34,4 +34,4 @@ class Knowledge:
         self.area = area
 
     def print(self):
-        print("Knowledge: " + str(self.location.text()) + " " + str(self.contacts) + " " + self.area)
+        print("Knowledge [" + str(self.id) + "]: " + str(self.location.text()) + " | Contacts: " + str(self.contacts) + " | Visited Area: " + self.area)

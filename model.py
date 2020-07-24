@@ -1,4 +1,4 @@
-from data import *
+import data
 from knowledge import *
 from probes import *
 
@@ -44,30 +44,44 @@ class Model:
 
         return False
 
+    def print(self):
+        self.knowledge.print()
+
     def check(self,models=[]):
 
+        found = True
+
         for m in models:
-            found = True
+            found = False
+
             if self.knowledge.location.id == m.knowledge.location.id and \
                     self.knowledge.area == m.knowledge.area:
 
-                for c in self.knowledge.contacts:
-                    if c not in m.knowledge.contacts:
-                        found = False
-                        break
+                if any(c not in m.knowledge.contacts for c in self.knowledge.contacts):
+                    continue
+                else:
+                    found = True
 
                 if found:
                     self.message = m.message
                     break
+
             else:
                 continue
 
-        print(self.message)
+        if found:
+            print(self.message)
+        else:
+            self.print()
+            print("There is no available AI model for the user's case.")
 
     def compute(self,agent=None,QUARANTINES=[],MODELS=[]):
         found = False
+        DENY = data.DENY
+        location = None
 
         for v in agent.individual.visits:
+            location = v
 
             # Probe for every visited area in current location (v)
             for place in v.quarantines:
@@ -287,13 +301,13 @@ class Model:
 
                             if answer not in AFFIRMATIONS:
                                 agent.individual.source = "CB or EB"
-                                agent.individual.model.knowledge = Knowledge(QUARANTINES[2], ["CB", "EB"], "restaurant")
+                                agent.individual.model.knowledge = Knowledge(QUARANTINES[3], ["CB", "EB"], "restaurant")
                                 agent.individual.model.check(MODELS)
                                 found = True
                                 break  # source is found
                             else:
                                 agent.individual.source = possibilities[i]
-                                agent.individual.model.knowledge = Knowledge(QUARANTINES[2], [possibilities[i]], "restaurant")
+                                agent.individual.model.knowledge = Knowledge(QUARANTINES[3], [possibilities[i]], "restaurant")
                                 agent.individual.model.check(MODELS)
                                 found = True
                                 break  # source is found
@@ -343,5 +357,5 @@ class Model:
 
         if not found:
             contacts = agent.interrogate(M015)
-            information = [v, contacts, v.quarantines]
+            information = [location, contacts, location.quarantines]
             agent.learn(information)

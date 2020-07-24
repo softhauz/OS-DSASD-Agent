@@ -233,3 +233,9 @@ MODELS = [
     MODEL_16, MODEL_17, MODEL_18, MODEL_19, MODEL_20,
     MODEL_21, MODEL_22
 ]
+
+# assign ID per knowledge base
+i = 1
+for m in MODELS:
+    m.knowledge.id = i
+    i = i + 1
