@@ -47,15 +47,18 @@ class Model:
     def check(self,models=[]):
 
         for m in models:
+            found = True
             if self.knowledge.location.id == m.knowledge.location.id and \
                     self.knowledge.area == m.knowledge.area:
 
-                for c in m.knowledge.contacts:
-                    if c not in self.knowledge.contacts:
-                        continue
+                for c in self.knowledge.contacts:
+                    if c not in m.knowledge.contacts:
+                        found = False
+                        break
 
-                self.message = m.message
-                break
+                if found:
+                    self.message = m.message
+                    break
             else:
                 continue
 

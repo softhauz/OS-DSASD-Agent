@@ -1,3 +1,4 @@
+import sys
 from individual import *
 from data import *
 
@@ -85,7 +86,7 @@ class Agent():
 
         return prober
 
-    def reply(self, message):
+    def reply(self, message=""):
         print("[Agent "+self.name+"]: " + message)
 
     def greet(self):
@@ -150,7 +151,7 @@ class Agent():
                     if not valid:
                         state = ERR_LOCATION_NOT_INDICATED
                         agent.reply(M009)
-                        exit
+                        sys.exit(1)
                     else:
                         original = SPACE.join((original, data))
                         agent.reply(M011)
@@ -173,7 +174,7 @@ class Agent():
 
                     if len(compromised_visits) == 0:
                         agent.reply(M010)
-                        exit
+                        sys.exit(1)
                     else:
                         agent.individual.visits = compromised_visits
 
