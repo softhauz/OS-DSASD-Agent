@@ -1,7 +1,7 @@
 import sys
 from individual import *
 from data import *
-
+from model import *
 
 """
 Simultaneous Tracker: "Historian"
@@ -174,7 +174,7 @@ class Agent():
 
                     if len(compromised_visits) == 0:
                         agent.reply(M010)
-                        sys.exit(1)
+                        sys.exit(0)
                     else:
                         agent.individual.visits = compromised_visits
 
@@ -185,6 +185,7 @@ class Agent():
 
                 if len(compromised_visits) == 0:
                     agent.reply(M010)
+                    sys.exit(0)
                 else:
                     agent.individual.visits = compromised_visits
         # end get_locations()
@@ -252,14 +253,20 @@ class Agent():
     def learn(self, information=[]):
         f = open("knowledge.txt", "a")
         text = ""
+        location = Location()
 
         for i in information:
             if isinstance(i,Location):
+                location = i
                 text = text + i.text() + SPACE
             else:
                 text = text + str(i) + SPACE
 
         f.write("\n"+text)
         f.close()
+
+        # convey knowledge to user
         self.reply(M037)
+        self.reply("Knowledge Set Added: ")
+        location.print()
 

@@ -1,3 +1,9 @@
 
 Location 1: ['grocery'] None ['grocery'] 
 Location 2: ['gym'] None ['gym'] 
+Location 1: ['gym'] none ['gym'] 
+Location 0: ['office', 'gym'] Hammy ['office', 'gym'] 
+Location 0: ['office', 'gym'] Hammy ['office', 'gym'] 
+Location 23: ['office', 'gym'] nancy ['office', 'gym'] 
+Location 23: ['office', 'gym'] nancy ['office', 'gym'] 
+Location 3: ['office', 'gym'] nancy ['office', 'gym'] 

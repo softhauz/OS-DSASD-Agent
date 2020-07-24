@@ -1,4 +1,5 @@
 import data
+from data import *
 from knowledge import *
 from probes import *
 
@@ -78,19 +79,22 @@ class Model:
     def compute(self,agent=None,QUARANTINES=[],MODELS=[]):
         found = False
         DENY = data.DENY
-        location = None
+        location = data.Location()
 
         for v in agent.individual.visits:
             location = v
+            flag_1 = False
 
             # Probe for every visited area in current location (v)
+            # arrange chronology based on timeline regardless of input
             for place in v.quarantines:
 
-                # LOCATION 1 - OFFICE
-                if v.id == 1 and place.find("office") > -1:
+                # LOCATION 1 - OFFICE [1st event]
+                if v.id == 1 and (place.find("office") > -1 or "office" in v.quarantines) and (not flag_1):
                     answer = agent.interrogate(M038)
 
                     if answer not in AFFIRMATIONS:
+                        flag_1 = True
                         continue # source did not come from this place
 
                     answer = agent.interrogate(M018)
@@ -126,8 +130,8 @@ class Model:
                             found = True
                             break  # source is found
 
-                # LOCATION 1 - GYM
-                elif v.id == 1 and place.find("gym") > -1:
+                # LOCATION 1 - GYM [2nd event - same timeline as the rest of compromised areas at Location 1]
+                elif v.id == 1 and (place.find("gym") > -1 or "gym" in v.quarantines) and (flag_1):
                     answer = agent.interrogate(M022)
 
                     if answer not in AFFIRMATIONS:
@@ -139,7 +143,7 @@ class Model:
                         found = True
                         break # source is found
 
-                # LOCATION 1 - GROCERY STORE
+                # LOCATION 1 - GROCERY STORE [2nd event - same timeline as the rest of compromised areas at Location 1]
                 elif v.id == 1 and (place.find("grocery") > -1 or place.find("store") > -1):
                     answer = agent.interrogate(M023)
 
@@ -152,7 +156,7 @@ class Model:
                         found = True
                         break # source is found
 
-                # LOCATION 1 - HOUSE
+                # LOCATION 1 - HOUSE [2nd event - same timeline as the rest of compromised areas at Location 1]
                 elif v.id == 1 and (place.find("house") > -1 or place.find("home") > -1):
                     answer = agent.interrogate(M024)
 
@@ -359,3 +363,4 @@ class Model:
             contacts = agent.interrogate(M015)
             information = [location, contacts, location.quarantines]
             agent.learn(information)
+            print("\tContacts: " + contacts)
