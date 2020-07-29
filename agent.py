@@ -19,7 +19,7 @@ and probe and collection information from individuals.
 Create a knowledge-based agent prototype that will compute and trace
 for the source of infection for an individual who has contracted Covid-19
 disease from Location 1 to Location 6 in a span of 12-hour period on
-9th of January 2019, based on fictional raw data provided.
+9th of January 2020, based on fictional raw data provided.
 
 The agent must have an ability to learn, create new models,
 compute for data relations, and find the source of infection 
