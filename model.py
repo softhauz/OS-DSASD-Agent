@@ -117,14 +117,12 @@ class Model:
 
                         while answer not in AFFIRMATIONS and (i < len(prober)):
                             answer = agent.interrogate(prober[i])
-                            print("answer: " + answer + " | " + str(answer not in AFFIRMATIONS))
                             i = i + 1
 
                             if answer in AFFIRMATIONS:
                                 break
 
                         i = i - 1
-                        print("culprit: " + possibilities[i] + " | " + str(answer not in AFFIRMATIONS))
 
                         if answer not in AFFIRMATIONS:
                             agent.individual.source = "AA, BA, or CA"
