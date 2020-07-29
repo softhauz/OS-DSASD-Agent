@@ -14,8 +14,8 @@ A <strong>knowledge-based agent</strong> prototype powered by artificial intelli
   <li>008: No AI Model Found</li>
 </ul>
 
-<h3>Simple Usage [Video Demonstration (5 minutes 17 seconds)]</h3>
+<h3>Simple Usage [Demonstration (5 minutes 17 seconds)]</h3>
 
-<a href="https://github.com/softhauz/OS-DSASD-Agent/video/demonstration_1.wmv">
-https://github.com/softhauz/OS-DSASD-Agent/video/demonstration_1.wmv
+<a href="https://github.com/softhauz/OS-DSASD-Agent/tree/master/video">
+Demonstration 1
 </a>
