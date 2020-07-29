@@ -131,7 +131,7 @@ class Model:
                             break  # source is found
 
                 # LOCATION 1 - GYM [2nd event - same timeline as the rest of compromised areas at Location 1]
-                elif v.id == 1 and (place.find("gym") > -1 or "gym" in v.quarantines) and (flag_1):
+                elif v.id == 1 and (place.find("gym") > -1 or "gym" in v.quarantines) and (flag_1 or (place.find("office") not in v.quarantines)):
                     answer = agent.interrogate(M022)
 
                     if answer not in AFFIRMATIONS:
@@ -144,7 +144,7 @@ class Model:
                         break # source is found
 
                 # LOCATION 1 - GROCERY STORE [2nd event - same timeline as the rest of compromised areas at Location 1]
-                elif v.id == 1 and (place.find("grocery") > -1 or place.find("store") > -1):
+                elif v.id == 1 and (place.find("grocery") > -1 or place.find("store") > -1) and (flag_1 or (place.find("office") not in v.quarantines)):
                     answer = agent.interrogate(M023)
 
                     if answer not in AFFIRMATIONS:
@@ -157,7 +157,7 @@ class Model:
                         break # source is found
 
                 # LOCATION 1 - HOUSE [2nd event - same timeline as the rest of compromised areas at Location 1]
-                elif v.id == 1 and (place.find("house") > -1 or place.find("home") > -1):
+                elif v.id == 1 and (place.find("house") > -1 or place.find("home") > -1) and (flag_1 or (place.find("office") not in v.quarantines)):
                     answer = agent.interrogate(M024)
 
                     if answer not in AFFIRMATIONS:
